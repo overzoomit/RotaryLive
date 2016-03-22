@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jms="http://www.springframework.org/schema/integration/jms"
+	xmlns:jmx="http://www.springframework.org/schema/integration/jmx"
+	xmlns:amqp="http://www.springframework.org/schema/integration/amqp"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:mail="http://www.springframework.org/schema/integration/mail"
+	xmlns:websocket="http://www.springframework.org/schema/integration/websocket"
+	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/integration
+			http://www.springframework.org/schema/integration/spring-integration.xsd
+			http://www.springframework.org/schema/integration/jms
+			http://www.springframework.org/schema/integration/jms/spring-integration-jms.xsd
+			http://www.springframework.org/schema/integration/jmx
+			http://www.springframework.org/schema/integration/jmx/spring-integration-jmx.xsd
+			http://www.springframework.org/schema/integration/amqp	
+			http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
+			http://www.springframework.org/schema/rabbit
+            http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+			http://www.springframework.org/schema/integration/websocket	
+			http://www.springframework.org/schema/integration/websocket/spring-integration-websocket.xsd	
+			http://www.springframework.org/schema/integration/mail	
+			http://www.springframework.org/schema/integration/mail/spring-integration-mail.xsd
+			http://www.springframework.org/schema/integration/stream
+			http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd">
+
+	<context:component-scan base-package="it.stasbranger.rotarylive.service" scoped-proxy="interfaces"/>
+
+	<!-- CRON che rinizializza tutti i preventivi mettendo gli impianti da opzionati a liberi -->
+	<inbound-channel-adapter channel="nullChannel" method="clientNotification" ref="EventService">
+		<poller cron="55 55 23 * * *"></poller>
+	</inbound-channel-adapter>
+</beans:beans>
