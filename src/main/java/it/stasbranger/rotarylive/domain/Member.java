@@ -18,12 +18,12 @@ public class Member {
 	@Indexed
 	private String lastName;
 	
+	@DBRef
+	private User user;
+	
 	@Version
 	private String version;
 	
-	@DBRef
-	private User user;
-
 	public String getId() {
 		return id;
 	}

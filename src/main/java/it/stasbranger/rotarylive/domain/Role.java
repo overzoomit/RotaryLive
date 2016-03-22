@@ -1,5 +1,6 @@
 package it.stasbranger.rotarylive.domain;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,8 @@ public class Role implements GrantedAuthority {
 
 	@NotEmpty
 	private String name;
+	
+	private Date creationDate = new Date();
 
 	@JsonIgnore
 	private Set<User> users = new HashSet<User>();
@@ -61,5 +64,13 @@ public class Role implements GrantedAuthority {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 }
