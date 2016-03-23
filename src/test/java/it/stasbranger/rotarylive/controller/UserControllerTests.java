@@ -10,22 +10,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
-import it.stasbranger.rotarylive.RotaryLiveApplication;
+import it.stasbranger.rotarylive.RotaryLiveApplicationTests;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = RotaryLiveApplication.class)
-@WebAppConfiguration
-public class UserControllerTests {
+@Transactional
+public class UserControllerTests extends RotaryLiveApplicationTests {
 
 	private MockMvc mvc;
 	
@@ -39,7 +34,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void testSayHelloWorld() throws Exception {
+	public void showUsersTEST() throws Exception {
 		String result = mvc.perform(get("/api/user").accept(MediaType.parseMediaType("application/json")))
 		.andExpect(status().isOk())
 		.andExpect(content().contentType("application/json"))
