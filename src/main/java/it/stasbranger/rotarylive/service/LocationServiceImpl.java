@@ -11,7 +11,8 @@ import it.stasbranger.rotarylive.domain.Location;
 @Service("LocationService")
 public class LocationServiceImpl implements LocationService {
 
-	@Autowired private LocationRepository locationRepository;
+	@Autowired 
+	private LocationRepository locationRepository;
 	
 	public void create(Location location){
 		locationRepository.save(location);
