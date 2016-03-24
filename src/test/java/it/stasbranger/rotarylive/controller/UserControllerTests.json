@@ -31,6 +31,22 @@
 			"login" : "claudio",
 			"password" : "pomo",
 			"version" : "0",
+		},
+		{
+			"_id" : "5",
+			"name" : "Francesco Bruni",
+			"clubName" : "Castelli Svevi",
+			"login" : "francesco",
+			"password" : "bruni",
+			"version" : "0",
+		},
+		{
+			"_id" : "6",
+			"name" : "Stefania Piccolo",
+			"clubName" : "Castelli Svevi",
+			"login" : "stefania",
+			"password" : "piccolo",
+			"version" : "0",
 		}
 	]
 }

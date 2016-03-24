@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 import it.stasbranger.rotarylive.RotaryLiveApplicationTests;
 
 @Transactional
+@ActiveProfiles("test")
 public class UserControllerTests extends RotaryLiveApplicationTests {
 
 	private MockMvc mvc;
@@ -36,7 +38,7 @@ public class UserControllerTests extends RotaryLiveApplicationTests {
 
 	@Rule
 	public MongoDbRule mongoDbRule = newMongoDbRule().configure(
-            replicationMongoDbConfiguration().databaseName("rotarylive")
+            replicationMongoDbConfiguration().databaseName("rotarytest")
                              .enableSharding()
                              .seed("localhost", 27017)
                              .configure())
