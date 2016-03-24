@@ -19,7 +19,7 @@ public class User {
 	private String name;
 	
 	@NotEmpty
-	private String refererName;
+	private String clubName;
 
 	@NotEmpty
 	private String login;
@@ -41,7 +41,7 @@ public class User {
 
 	public User(User user) {
 		this.name = user.getName();
-		this.refererName = user.getRefererName();
+		this.clubName = user.getClubName();
 		this.login = user.getLogin();
 		this.password = user.getPassword();
 		this.roles = user.getRoles();
@@ -95,12 +95,12 @@ public class User {
 		this.version = version;
 	}
 
-	public String getRefererName() {
-		return refererName;
+	public String getClubName() {
+		return clubName;
 	}
 
-	public void setRefererName(String refererName) {
-		this.refererName = refererName;
+	public void setClubName(String clubName) {
+		this.clubName = clubName;
 	}
 
 	public Member getMember() {

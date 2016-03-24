@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Rotarapp</name>
+	<name>RotaryLive</name>
 	<description>Rotary Live Project</description>
 
 	<parent>
@@ -87,6 +87,11 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.lordofthejars</groupId>
+			<artifactId>nosqlunit-mongodb</artifactId>
+			<version>0.8.1</version>
 		</dependency>
 	</dependencies>
 

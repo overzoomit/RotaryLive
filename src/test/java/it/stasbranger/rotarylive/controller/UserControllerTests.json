@@ -1,0 +1,36 @@
+{ 
+	"user" : [
+		{
+			"_id" : "1",
+			"name" : "Flavio Troia",
+			"clubName" : "Castelli Svevi",
+			"login" : "flavio",
+			"password" : "troia",
+			"version" : "0",
+		},
+		{
+			"_id" : "2",
+			"name" : "Silvio Troia",
+			"clubName" : "Castelli Svevi",
+			"login" : "silvio",
+			"password" : "troia",
+			"version" : "0",
+		},
+		{
+			"_id" : "3",
+			"name" : "Andrea Strippoli",
+			"clubName" : "Castelli Svevi",
+			"login" : "andrea",
+			"password" : "strippoli",
+			"version" : "0",
+		},
+		{
+			"_id" : "4",
+			"name" : "Claudio Pomo",
+			"clubName" : "Castelli Svevi",
+			"login" : "claudio",
+			"password" : "pomo",
+			"version" : "0",
+		}
+	]
+}
