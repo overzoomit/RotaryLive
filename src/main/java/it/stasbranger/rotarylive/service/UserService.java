@@ -9,7 +9,7 @@ import it.stasbranger.rotarylive.domain.User;
 
 public interface UserService {
 	
-	public void create(User user);
+	public void create(User user) throws Exception;
 	public User update(User user);
 	public User findOne(String id);
 	public List<User> findAll();

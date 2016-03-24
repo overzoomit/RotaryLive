@@ -3,6 +3,7 @@ package it.stasbranger.rotarylive.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,8 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired private UserRepository userRepository;
 	
-	public void create(User user){
+	public void create(User user) throws Exception {
+		if(userRepository.findByLogin(user.getLogin())!=null) throw new DuplicateKeyException("this account already exists");
 		userRepository.save(user);
 	}
 	

@@ -1,6 +1,7 @@
 package it.stasbranger.rotarylive.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -34,7 +35,7 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private UserResourceAssembler userResourceAssembler;
-	
+
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody 
 	public HttpEntity<PagedResources<UserResource>> showUsers(@PageableDefault Pageable pageable, PagedResourcesAssembler<User> assembler) {
@@ -57,18 +58,24 @@ public class UserController {
 			return new ResponseEntity<Resource<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public HttpEntity<Resources<User>> createUser(@RequestBody User user) {
-		this.userService.create(user);
-		return new ResponseEntity<Resources<User>>(HttpStatus.CREATED);
+		try{
+			this.userService.create(user);
+			return new ResponseEntity<Resources<User>>(HttpStatus.CREATED);
+		}catch(DuplicateKeyException e){
+			return new ResponseEntity<Resources<User>>(HttpStatus.CONFLICT);	
+		}catch(Exception e){
+			return new ResponseEntity<Resources<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public HttpEntity<Resource<User>> updateUser(@PathVariable String id, @RequestBody User user) {
 		user.setId(id);
-		
+
 		if(this.userService.findOne(id) == null){
 			return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
 		}
@@ -76,7 +83,7 @@ public class UserController {
 		Resource<User> resource = userResourceAssembler.toResource(user);
 		return new ResponseEntity<Resource<User>>(resource, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public HttpEntity<Resource<User>> deleteUser(@PathVariable String id) {
 		if(this.userService.findOne(id) == null){

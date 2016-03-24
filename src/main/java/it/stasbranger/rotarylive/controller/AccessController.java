@@ -1,6 +1,7 @@
 package it.stasbranger.rotarylive.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
@@ -23,7 +24,13 @@ public class AccessController {
 	
 	@RequestMapping(value="/signup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public HttpEntity<Resources<User>> createUser(@RequestBody User user) {
-		this.userService.create(user);
-		return new ResponseEntity<Resources<User>>(HttpStatus.CREATED);
+		try{
+			this.userService.create(user);
+			return new ResponseEntity<Resources<User>>(HttpStatus.CREATED);
+		}catch(DuplicateKeyException e){
+			return new ResponseEntity<Resources<User>>(HttpStatus.CONFLICT);	
+		}catch(Exception e){
+			return new ResponseEntity<Resources<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }
