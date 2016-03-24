@@ -3,7 +3,6 @@ package it.stasbranger.rotarylive.domain;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Location {
 

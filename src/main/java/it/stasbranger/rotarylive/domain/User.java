@@ -1,20 +1,20 @@
 package it.stasbranger.rotarylive.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class User {
 
 	@Id
 	private String id;
 
+	private Date creationDate = new Date();
+	
 	@NotEmpty
 	private String name;
 	
@@ -30,11 +30,10 @@ public class User {
 	@Version
 	private String version;
 
-	@DBRef
 	private Member member;
 	
-	@JsonIgnore
-	private Set<Role> roles = new HashSet<Role>();
+	@DBRef(lazy = true)
+	private List<Role> roles;
 
 	public User() {
 	}
@@ -44,7 +43,6 @@ public class User {
 		this.clubName = user.getClubName();
 		this.login = user.getLogin();
 		this.password = user.getPassword();
-		this.roles = user.getRoles();
 	}
 
 	public String getId() {
@@ -79,11 +77,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -109,5 +107,13 @@ public class User {
 
 	public void setMember(Member member) {
 		this.member = member;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 }

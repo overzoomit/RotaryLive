@@ -1,0 +1,14 @@
+{ 
+	"role" : [
+		{
+			"_id" : "56f41a4be4b064c1f6818418",
+			"name" : "ROLE_ADMIN",
+			"version" : "0"
+		},
+		{
+			"_id" : "56f41a5ee4b064c1f6818419",
+			"name" : "ROLE_USER",
+			"version" : "0"
+		}
+	]
+}

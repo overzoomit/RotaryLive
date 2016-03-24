@@ -1,37 +1,21 @@
 package it.stasbranger.rotarylive.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class Member {
-
-	@Id
-	private String id;
 
 	@NotEmpty
 	private String firstName;
 	
 	@NotEmpty
-	@Indexed
 	private String lastName;
 	
-	@DBRef
-	private User user;
+	private String telephone;
 	
-	@Version
-	private String version;
+	private String mobile;
 	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
+	private String address;
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -48,19 +32,27 @@ public class Member {
 		this.lastName = lastName;
 	}
 
-	public String getVersion() {
-		return version;
+	public String getTelephone() {
+		return telephone;
 	}
 
-	public void setVersion(String version) {
-		this.version = version;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
-	public User getUser() {
-		return user;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

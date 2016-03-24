@@ -60,6 +60,7 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody 
 	public HttpEntity<Resources<User>> createUser(@RequestBody User user) {
 		try{
 			this.userService.create(user);

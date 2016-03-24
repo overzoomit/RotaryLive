@@ -6,6 +6,11 @@
 			"clubName" : "Castelli Svevi",
 			"login" : "flavio",
 			"password" : "troia",
+			"member" : {"firstName": "Flavio",
+						"lastName" : "Troia",
+						"telephone" : "02334380922",
+						"mobile" : "34733423322",
+						"address" : "Via Sosta San Riccardo 28"},
 			"version" : "0",
 		},
 		{

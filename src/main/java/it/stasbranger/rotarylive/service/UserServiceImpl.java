@@ -1,5 +1,6 @@
 package it.stasbranger.rotarylive.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +10,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import it.stasbranger.rotarylive.dao.UserRepository;
+import it.stasbranger.rotarylive.domain.Role;
 import it.stasbranger.rotarylive.domain.User;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService {
 
 	@Autowired private UserRepository userRepository;
+	@Autowired private RoleService roleService;
 	
 	public void create(User user) throws Exception {
 		if(userRepository.findByLogin(user.getLogin())!=null) throw new DuplicateKeyException("this account already exists");
+		
+		List<Role> roles = user.getRoles();
+		if(roles == null || roles.isEmpty()){
+			Role role = roleService.findByName("ROLE_USER");
+			roles = new ArrayList<Role>();
+			roles.add(role);	
+			user.setRoles(roles);
+		}
 		userRepository.save(user);
 	}
 	

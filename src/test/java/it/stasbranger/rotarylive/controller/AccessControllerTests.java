@@ -1,10 +1,13 @@
 package it.stasbranger.rotarylive.controller;
 
-import static com.lordofthejars.nosqlunit.mongodb.MongoDbConfigurationBuilder.mongoDb;
+import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder.newMongoDbRule;
+import static com.lordofthejars.nosqlunit.mongodb.ReplicationMongoDbConfigurationBuilder.replicationMongoDbConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,6 +19,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.lordofthejars.nosqlunit.annotation.UsingDataSet;
+import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 
 import it.stasbranger.rotarylive.RotaryLiveApplicationTests;
@@ -32,7 +37,12 @@ private MockMvc mvc;
 	private FilterChainProxy springSecurityFilterChain;
 	
 	@Rule
-	protected MongoDbRule remoteMongoDbRule = new MongoDbRule(mongoDb().databaseName("test").build());
+	public MongoDbRule mongoDbRule = newMongoDbRule().configure(
+            replicationMongoDbConfiguration().databaseName("rotarytest")
+                             .enableSharding()
+                             .seed("localhost", 27017)
+                             .configure())
+                        .build(); 
 	
 	@Before
 	public void setup() {
@@ -42,13 +52,36 @@ private MockMvc mvc;
 	}
 	
 	@Test
+	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void signupTEST() throws Exception {
 		
-		String content = "{\"name\":\"Mickey Mouse\",\"refererName\":\"Rotary Club Disney\",\"login\":\"mickey\",\"password\":\"mouse\"}";
+		JSONObject json = new JSONObject();
+		json.put("name", "Mickey Mouse");
+		json.put("clubName", "Rotary Club Disney");
+		json.put("login", "mickey");
+		json.put("password", "mouse");
 		
 		mvc.perform(post("/signup")
-				.content(content)
-				.accept(MediaType.parseMediaType("application/json")))
-		.andExpect(status().isCreated());
+				.content(json.toString())
+				.contentType("application/json")
+				.accept(MediaType.APPLICATION_JSON)
+				)
+		.andExpect(status().isCreated())
+		.andExpect(content().contentType("application/json;charset=utf-8"));
+	}
+	
+	@Test
+	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	public void signupConflictTEST() throws Exception {
+		
+		String content = "{\"name\":\"Flavio Troia\",\"clubName\":\"Rotary Club Andria\",\"login\":\"flavio\",\"password\":\"mypassword\"}";
+		JSONObject json = new JSONObject(content);
+		mvc.perform(post("/signup")
+				.content(json.toString())
+				.contentType("application/json")
+				.accept(MediaType.parseMediaType("application/json"))
+				)
+		.andExpect(status().isConflict())
+		.andExpect(content().contentType("application/json;charset=utf-8"));
 	}
 }
