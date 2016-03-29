@@ -1,0 +1,14 @@
+{ 
+	"attach" : [
+		{
+			"_id" : "56fab17ee4b074b1e6b6cb79",
+			"tipo" : "IMAGE_PROFILE",
+			"pathFile" : "/opt/rotarylive/images/1459270014432.jpg",
+			"uriCode" : "NTZmYWIxN2VlNGIwNzRiMWU2YjZjYjc5_D191BA3652207C989767772987AF7693",
+			"contentType" : "image/jpeg",
+			"originalFilename" : "flavio.jpeg",
+			"version" : "1"
+		}
+
+	]
+}
