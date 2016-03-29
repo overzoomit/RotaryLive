@@ -25,9 +25,6 @@ import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 
 import it.stasbranger.rotarylive.RotaryLiveApplicationTests;
-import it.stasbranger.rotarylive.domain.Role;
-import it.stasbranger.rotarylive.domain.User;
-import it.stasbranger.rotarylive.service.RoleService;
 import it.stasbranger.rotarylive.service.UserService;
 
 @Transactional
@@ -35,19 +32,17 @@ public class UserControllerTests extends RotaryLiveApplicationTests {
 
 	private MockMvc mvc;
 
-	@Autowired private UserService userService;
-	
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
 	@Rule
 	public MongoDbRule mongoDbRule = newMongoDbRule().configure(
-            replicationMongoDbConfiguration().databaseName("rotarytest")
-                             .enableSharding()
-                             .seed("localhost", 27017)
-                             .configure())
-                        .build(); 
-	
+			replicationMongoDbConfiguration().databaseName("rotarytest")
+			.enableSharding()
+			.seed("localhost", 27017)
+			.configure())
+	.build(); 
+
 	@Before
 	public void setup() {
 		mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
@@ -57,7 +52,8 @@ public class UserControllerTests extends RotaryLiveApplicationTests {
 	@Test
 	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void showUsersTEST() throws Exception {
-		String result = mvc.perform(get("/api/user").accept(MediaType.parseMediaType("application/json")))
+		String result = mvc.perform(get("/api/user").contentType("application/json")
+				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType("application/json"))
 				.andReturn().getResponse().getContentAsString();
@@ -69,17 +65,5 @@ public class UserControllerTests extends RotaryLiveApplicationTests {
 			JSONObject j = array.getJSONObject(i);
 			assertTrue(j.get("login")!=null);
 		}
-	}
-	
-	@Test
-	@UsingDataSet(locations={"RoleControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
-	public void createUsersTEST() throws Exception {
-		User user = new User();
-		user.setClubName("Castelli Svevi");
-		user.setLogin("Ciao Silvio");
-		user.setName("Silvio Ciaoaoaoaoao");
-		user.setPassword("cicciobello");
-		
-		userService.create(user);
 	}
 }

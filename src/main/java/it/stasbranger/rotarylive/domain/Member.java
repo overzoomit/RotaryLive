@@ -1,6 +1,10 @@
 package it.stasbranger.rotarylive.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Transient;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Member {
 
@@ -15,6 +19,12 @@ public class Member {
 	private String mobile;
 	
 	private String address;
+	
+	@JsonIgnore
+    @Transient
+    private MultipartFile file;
+    
+    private String uriCode;
 	
 	public String getFirstName() {
 		return firstName;
@@ -54,5 +64,21 @@ public class Member {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public String getUriCode() {
+		return uriCode;
+	}
+
+	public void setUriCode(String uriCode) {
+		this.uriCode = uriCode;
 	}
 }

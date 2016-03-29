@@ -6,4 +6,5 @@ import it.stasbranger.rotarylive.domain.Member;
 
 public interface MemberRepository extends MongoRepository<Member, String> {
 
+	public Member findByUriCode(String uriCode);
 }

@@ -1,17 +1,21 @@
-{ 
-	"user" : [
+{"user" : [
 		{
 			"_id" : "1",
 			"name" : "Flavio Troia",
 			"clubName" : "Castelli Svevi",
 			"login" : "flavio",
 			"password" : "troia",
+			"enabled" : true,
 			"member" : {"firstName": "Flavio",
 						"lastName" : "Troia",
 						"telephone" : "02334380922",
 						"mobile" : "34733423322",
+						"uriCode" : "NTZmYWIxN2VlNGIwNzRiMWU2YjZjYjc5_D191BA3652207C989767772987AF7693",
 						"address" : "Via Sosta San Riccardo 28"},
-			"version" : "0",
+			"roles" : [{
+						"name" : "ROLE_ADMIN"
+						}],			
+			"version" : "0"
 		},
 		{
 			"_id" : "2",
@@ -19,7 +23,11 @@
 			"clubName" : "Castelli Svevi",
 			"login" : "silvio",
 			"password" : "troia",
-			"version" : "0",
+			"enabled" : true,
+			"roles" : [{
+						"name" : "ROLE_USER"
+						}],		
+			"version" : "0"
 		},
 		{
 			"_id" : "3",
@@ -27,7 +35,8 @@
 			"clubName" : "Castelli Svevi",
 			"login" : "andrea",
 			"password" : "strippoli",
-			"version" : "0",
+			"enabled" : true,
+			"version" : "0"
 		},
 		{
 			"_id" : "4",
@@ -35,7 +44,8 @@
 			"clubName" : "Castelli Svevi",
 			"login" : "claudio",
 			"password" : "pomo",
-			"version" : "0",
+			"enabled" : false,
+			"version" : "0"
 		},
 		{
 			"_id" : "5",
@@ -43,7 +53,8 @@
 			"clubName" : "Castelli Svevi",
 			"login" : "francesco",
 			"password" : "bruni",
-			"version" : "0",
+			"enabled" : false,
+			"version" : "0"
 		},
 		{
 			"_id" : "6",
@@ -51,7 +62,8 @@
 			"clubName" : "Castelli Svevi",
 			"login" : "stefania",
 			"password" : "piccolo",
-			"version" : "0",
+			"enabled" : false,
+			"version" : "0"
 		}
 	]
 }

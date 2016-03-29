@@ -1,5 +1,6 @@
 package it.stasbranger.rotarylive.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface UserService {
 	public Page<User> findAll(Pageable pageable);
 	public void delete(String id);
 	public void delete(User user);
+	public User findByLogin(String login);
+	public User addImage(User user) throws IOException;
 }

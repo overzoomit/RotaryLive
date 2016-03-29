@@ -1,5 +1,7 @@
 package it.stasbranger.rotarylive.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -58,6 +60,26 @@ public class UserController {
 			return new ResponseEntity<Resource<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@RequestMapping(value = "/me", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public HttpEntity<Resource<User>> showPrincipal(HttpServletRequest httpServletRequest) {
+		try{
+			String login = httpServletRequest.getUserPrincipal().getName();
+			User user = this.userService.findByLogin(login);
+			if(user == null){
+				return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
+			}
+			Resource<User> resource = userResourceAssembler.toResource(user);
+			if(user.getEnabled()){
+				return new ResponseEntity<Resource<User>>(resource, HttpStatus.OK);
+			}else{
+				return new ResponseEntity<Resource<User>>(resource, HttpStatus.LOCKED);
+			}	
+		}catch(Exception e){
+			return new ResponseEntity<Resource<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody 
@@ -84,7 +106,7 @@ public class UserController {
 		Resource<User> resource = userResourceAssembler.toResource(user);
 		return new ResponseEntity<Resource<User>>(resource, HttpStatus.OK);
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public HttpEntity<Resource<User>> deleteUser(@PathVariable String id) {
 		if(this.userService.findOne(id) == null){

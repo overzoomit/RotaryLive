@@ -5,7 +5,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,15 +24,13 @@ public class AccessController {
 	
 	@RequestMapping(value="/signup", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public HttpEntity<Resources<User>> createUser(@RequestBody User user) {
-		HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
 		try{
 			this.userService.create(user);
-			return new ResponseEntity<Resources<User>>(headers, HttpStatus.CREATED);
+			return new ResponseEntity<Resources<User>>(HttpStatus.CREATED);
 		}catch(DuplicateKeyException e){
-			return new ResponseEntity<Resources<User>>(headers, HttpStatus.CONFLICT);	
+			return new ResponseEntity<Resources<User>>(HttpStatus.CONFLICT);	
 		}catch(Exception e){
-			return new ResponseEntity<Resources<User>>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Resources<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

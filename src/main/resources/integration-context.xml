@@ -32,7 +32,16 @@
 			http://www.springframework.org/schema/integration/stream/spring-integration-stream.xsd">
 
 	<context:component-scan base-package="it.stasbranger.rotarylive.service" scoped-proxy="interfaces"/>
-
+	
+	<!-- processo che mi consente di uplodare un immagine in modo asicrono -->
+	<!-- <channel id="inputUploadFileChannel"><queue/></channel>
+	<payload-type-router input-channel="inputUploadFileChannel">
+		<poller fixed-rate="1000"></poller>
+    	<mapping type="it.stasbranger.rotarylive.domain.User" channel="uploadImageUserChannel" />
+	</payload-type-router>
+	<channel id="uploadImageUserChannel"></channel>
+	<outbound-channel-adapter method="addImage" ref="UserService" channel="uploadImageUserChannel"/> -->
+	
 	<!-- CRON che rinizializza tutti i preventivi mettendo gli impianti da opzionati a liberi -->
 	<inbound-channel-adapter channel="nullChannel" method="clientNotification" ref="EventService">
 		<poller cron="55 55 23 * * *"></poller>

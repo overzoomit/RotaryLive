@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 public class User {
 
@@ -22,17 +22,19 @@ public class User {
 	private String clubName;
 
 	@NotEmpty
+	@Indexed(unique = true)
 	private String login;
 
 	@NotEmpty
 	private String password;
 
+	private Boolean enabled = false;
+	
 	@Version
 	private String version;
 
 	private Member member;
 	
-	@DBRef(lazy = true)
 	private List<Role> roles;
 
 	public User() {
@@ -115,5 +117,13 @@ public class User {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
 	}
 }

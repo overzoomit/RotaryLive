@@ -28,7 +28,7 @@ import it.stasbranger.rotarylive.RotaryLiveApplicationTests;
 @Transactional
 public class AccessControllerTests extends RotaryLiveApplicationTests {
 
-private MockMvc mvc;
+	private MockMvc mvc;
 	
 	@Autowired
 	private WebApplicationContext webApplicationContext;
@@ -67,7 +67,7 @@ private MockMvc mvc;
 				.accept(MediaType.APPLICATION_JSON)
 				)
 		.andExpect(status().isCreated())
-		.andExpect(content().contentType("application/json;charset=utf-8"));
+		.andExpect(content().contentType("application/json"));
 	}
 	
 	@Test
@@ -82,6 +82,6 @@ private MockMvc mvc;
 				.accept(MediaType.parseMediaType("application/json"))
 				)
 		.andExpect(status().isConflict())
-		.andExpect(content().contentType("application/json;charset=utf-8"));
+		.andExpect(content().contentType("application/json"));
 	}
 }
