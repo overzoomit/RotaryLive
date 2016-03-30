@@ -7,5 +7,5 @@ import it.stasbranger.rotarylive.domain.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
-	public User findByLogin(String login);
+	public User findByUsername(String username);
 }

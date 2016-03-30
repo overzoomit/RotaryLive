@@ -2,10 +2,12 @@ package it.stasbranger.rotarylive.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Document
 public class Member {
 
 	@NotEmpty
@@ -18,7 +20,9 @@ public class Member {
 	
 	private String mobile;
 	
-	private String address;
+	private Address address;
+	
+	private Job job;
 	
 	@JsonIgnore
     @Transient
@@ -58,11 +62,11 @@ public class Member {
 		this.mobile = mobile;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 	
@@ -80,5 +84,13 @@ public class Member {
 
 	public void setUriCode(String uriCode) {
 		this.uriCode = uriCode;
+	}
+
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
 	}
 }

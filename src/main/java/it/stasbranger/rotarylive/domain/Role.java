@@ -1,8 +1,10 @@
 package it.stasbranger.rotarylive.domain;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
+@Document
 public class Role implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;

@@ -52,7 +52,7 @@ public class MemberController {
             if (user == null) {
             	return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
             }
-            if (!username.equals(user.getLogin()) && !httpServletRequest.isUserInRole("ADMIN")) {
+            if (!username.equals(user.getUsername()) && !httpServletRequest.isUserInRole("ADMIN")) {
             	return new ResponseEntity<Resource<User>>(HttpStatus.METHOD_NOT_ALLOWED);
             }
             Member member = user.getMember();

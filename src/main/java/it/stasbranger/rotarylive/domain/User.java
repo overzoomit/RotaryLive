@@ -7,7 +7,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class User {
 
 	@Id
@@ -19,31 +21,31 @@ public class User {
 	private String name;
 	
 	@NotEmpty
-	private String clubName;
+	private Club club;
 
 	@NotEmpty
 	@Indexed(unique = true)
-	private String login;
+	private String username;
 
 	@NotEmpty
 	private String password;
 
 	private Boolean enabled = false;
 	
-	@Version
-	private String version;
-
 	private Member member;
-	
+
 	private List<Role> roles;
 
+	@Version
+	private String version;
+	
 	public User() {
 	}
 
 	public User(User user) {
 		this.name = user.getName();
-		this.clubName = user.getClubName();
-		this.login = user.getLogin();
+		this.club = user.getClub();
+		this.username = user.getUsername();
 		this.password = user.getPassword();
 	}
 
@@ -63,12 +65,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
@@ -95,12 +97,12 @@ public class User {
 		this.version = version;
 	}
 
-	public String getClubName() {
-		return clubName;
+	public Club getClub() {
+		return club;
 	}
 
-	public void setClubName(String clubName) {
-		this.clubName = clubName;
+	public void setClub(Club club) {
+		this.club = club;
 	}
 
 	public Member getMember() {

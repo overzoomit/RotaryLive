@@ -14,10 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -64,16 +62,11 @@ public class MemberControllerTests extends RotaryLiveApplicationTests {
 
 		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");
 
-		MockHttpSession session = new MockHttpSession();
-		session.setAttribute(
-				HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, 
-				new MockSecurityContext(principal));
-
 		User user = userService.findOne("1");
 		String uriCode = user.getMember() == null ? null : user.getMember().getUriCode();
 
 		String result = mvc.perform(MockMvcRequestBuilders.fileUpload("/api/member/1/image").file(data)
-				.accept(MediaType.APPLICATION_JSON).principal(principal).session(session))
+				.accept(MediaType.APPLICATION_JSON).principal(principal))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
@@ -91,16 +84,11 @@ public class MemberControllerTests extends RotaryLiveApplicationTests {
 
 		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");
 
-		MockHttpSession session = new MockHttpSession();
-		session.setAttribute(
-				HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, 
-				new MockSecurityContext(principal));
-
 		User user = userService.findOne("2");
 		String uriCode = user.getMember() == null ? null : user.getMember().getUriCode();
 
 		String result = mvc.perform(MockMvcRequestBuilders.fileUpload("/api/member/2/image").file(data)
-				.accept(MediaType.APPLICATION_JSON).principal(principal).session(session))
+				.accept(MediaType.APPLICATION_JSON).principal(principal))
 				.andDo(print())
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();

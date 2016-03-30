@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,6 @@ import com.lordofthejars.nosqlunit.core.LoadStrategyEnum;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 
 import it.stasbranger.rotarylive.RotaryLiveApplicationTests;
-import it.stasbranger.rotarylive.service.UserService;
 
 @Transactional
 public class UserControllerTests extends RotaryLiveApplicationTests {
@@ -63,7 +63,23 @@ public class UserControllerTests extends RotaryLiveApplicationTests {
 		JSONArray array = emb.getJSONArray("userList");
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject j = array.getJSONObject(i);
-			assertTrue(j.get("login")!=null);
+			assertTrue(j.get("username")!=null);
 		}
+	}
+	
+	@Test
+	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	public void showMeTEST() throws Exception {
+	
+		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");
+
+		String result = mvc.perform(get("/api/user/me").contentType("application/json")
+				.accept(MediaType.APPLICATION_JSON).principal(principal))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType("application/json"))
+				.andReturn().getResponse().getContentAsString();
+
+		JSONObject json = new JSONObject(result);
+		assertTrue(json.get("username").equals(principal.getName()));
 	}
 }

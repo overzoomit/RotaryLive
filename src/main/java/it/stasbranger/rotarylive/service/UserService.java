@@ -17,6 +17,6 @@ public interface UserService {
 	public Page<User> findAll(Pageable pageable);
 	public void delete(String id);
 	public void delete(User user);
-	public User findByLogin(String login);
+	public User findByUsername(String username);
 	public User addImage(User user) throws IOException;
 }

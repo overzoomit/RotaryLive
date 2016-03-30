@@ -2,8 +2,8 @@
 		{
 			"_id" : "1",
 			"name" : "Flavio Troia",
-			"clubName" : "Castelli Svevi",
-			"login" : "flavio",
+			"club" : {"name" : "Castelli Svevi"},
+			"username" : "flavio",
 			"password" : "troia",
 			"enabled" : true,
 			"member" : {"firstName": "Flavio",
@@ -11,7 +11,10 @@
 						"telephone" : "02334380922",
 						"mobile" : "34733423322",
 						"uriCode" : "NTZmYWIxN2VlNGIwNzRiMWU2YjZjYjc5_D191BA3652207C989767772987AF7693",
-						"address" : "Via Sosta San Riccardo 28"},
+						"address" : {"city" :"Andria",
+									 "street" : "Via Sosta San Riccardo 28"}
+						},
+			"job"	: {"name":"Ingegnere"},			
 			"roles" : [{
 						"name" : "ROLE_ADMIN"
 						}],			
@@ -20,8 +23,8 @@
 		{
 			"_id" : "2",
 			"name" : "Silvio Troia",
-			"clubName" : "Castelli Svevi",
-			"login" : "silvio",
+			"club" : {"name" : "Castelli Svevi"},
+			"username" : "silvio",
 			"password" : "troia",
 			"enabled" : true,
 			"roles" : [{
@@ -32,8 +35,8 @@
 		{
 			"_id" : "3",
 			"name" : "Andrea Strippoli",
-			"clubName" : "Castelli Svevi",
-			"login" : "andrea",
+			"club" : {"name" : "Castelli Svevi"},
+			"username" : "andrea",
 			"password" : "strippoli",
 			"enabled" : true,
 			"version" : "0"
@@ -41,8 +44,8 @@
 		{
 			"_id" : "4",
 			"name" : "Claudio Pomo",
-			"clubName" : "Castelli Svevi",
-			"login" : "claudio",
+			"club" : {"name" : "Castelli Svevi"},
+			"username" : "claudio",
 			"password" : "pomo",
 			"enabled" : false,
 			"version" : "0"
@@ -50,8 +53,8 @@
 		{
 			"_id" : "5",
 			"name" : "Francesco Bruni",
-			"clubName" : "Castelli Svevi",
-			"login" : "francesco",
+			"club" : {"name" : "Castelli Svevi"},
+			"username" : "francesco",
 			"password" : "bruni",
 			"enabled" : false,
 			"version" : "0"
@@ -59,8 +62,8 @@
 		{
 			"_id" : "6",
 			"name" : "Stefania Piccolo",
-			"clubName" : "Castelli Svevi",
-			"login" : "stefania",
+			"club" : {"name" : "Castelli Svevi"},
+			"username" : "stefania",
 			"password" : "piccolo",
 			"enabled" : false,
 			"version" : "0"

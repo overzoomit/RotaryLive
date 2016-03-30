@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,10 +23,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired private UserRepository userRepository;
 	@Autowired private RoleService roleService;
 	@Autowired private AttachService attachService;
-
+	
 	public void create(User user) throws Exception {
-		if(userRepository.findByLogin(user.getLogin())!=null) throw new DuplicateKeyException("this account already exists");
+		if(userRepository.findByUsername(user.getUsername())!=null) throw new DuplicateKeyException("this account already exists");
 
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		
 		List<Role> roles = user.getRoles();
 		if(roles == null || roles.isEmpty()){
 			Role role = roleService.findByName("ROLE_USER");
@@ -60,8 +63,8 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll(pageable);
 	}
 
-	public User findByLogin(String login){
-		return userRepository.findByLogin(login);
+	public User findByUsername(String username){
+		return userRepository.findByUsername(username);
 	}
 
 	public User addImage(User user) throws IOException {

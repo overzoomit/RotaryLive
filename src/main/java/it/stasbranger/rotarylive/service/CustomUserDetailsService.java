@@ -41,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByLogin(username);
+		User user = userRepository.findByUsername(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("User %s does not exist!", username));
 		}
@@ -59,11 +59,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 		@Override
 		public Collection<? extends GrantedAuthority> getAuthorities() {
 			return getRoles();
-		}
-
-		@Override
-		public String getUsername() {
-			return getLogin();
 		}
 
 		@Override

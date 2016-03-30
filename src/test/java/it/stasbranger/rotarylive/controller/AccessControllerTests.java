@@ -58,7 +58,7 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 		JSONObject json = new JSONObject();
 		json.put("name", "Mickey Mouse");
 		json.put("clubName", "Rotary Club Disney");
-		json.put("login", "mickey");
+		json.put("username", "mickey");
 		json.put("password", "mouse");
 		
 		mvc.perform(post("/signup")
@@ -74,7 +74,7 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void signupConflictTEST() throws Exception {
 		
-		String content = "{\"name\":\"Flavio Troia\",\"clubName\":\"Rotary Club Andria\",\"login\":\"flavio\",\"password\":\"mypassword\"}";
+		String content = "{\"name\":\"Flavio Troia\",\"club\":{\"name\":\"Rotary Club Andria\"},\"username\":\"test\",\"password\":\"mypassword\"}";
 		JSONObject json = new JSONObject(content);
 		mvc.perform(post("/signup")
 				.content(json.toString())

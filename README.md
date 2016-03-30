@@ -29,9 +29,9 @@ Using the returned *access_token* value you can access to the protected endpoint
 
 You can also POST, PUT or DELETE a record data:    
     
-    curl -X POST http://localhost:8383/api/user -H "Authorization: Bearer <access_token>" -H "Content-Type: application/json" -d '{"id":2,"name":"Flavio Troia", "login":"flavio", "password":"*******"}'
+    curl -X POST http://localhost:8383/api/user -H "Authorization: Bearer <access_token>" -H "Content-Type: application/json" -d '{"id":2,"name":"Flavio Troia", "username":"flavio", "password":"*******"}'
     
-    curl -X PUT http://localhost:8383/api/user/2 -H "Authorization: Bearer <access_token>" -H "Content-Type: application/json" -d '{"name":"Flavio Troia", "login":"flavio.troia", "password":"*******"}'
+    curl -X PUT http://localhost:8383/api/user/2 -H "Authorization: Bearer <access_token>" -H "Content-Type: application/json" -d '{"name":"Flavio Troia", "username":"flavio.troia", "password":"*******"}'
     
     curl -X DELETE http://localhost:8383/api/user/2 -H "Authorization: Bearer <access_token>" -H "Content-Type: application/json"
   

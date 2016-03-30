@@ -65,8 +65,8 @@ public class UserController {
 	@ResponseBody
 	public HttpEntity<Resource<User>> showPrincipal(HttpServletRequest httpServletRequest) {
 		try{
-			String login = httpServletRequest.getUserPrincipal().getName();
-			User user = this.userService.findByLogin(login);
+			String username = httpServletRequest.getUserPrincipal().getName();
+			User user = this.userService.findByUsername(username);
 			if(user == null){
 				return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
 			}
