@@ -4,7 +4,7 @@
 			"name" : "Flavio Troia",
 			"club" : {"name" : "Castelli Svevi"},
 			"username" : "flavio",
-			"password" : "troia",
+			"password" : "$2a$08$E4oPsyc/wo4DDZfmZn8WsuVPGupajk6LGP8Re1wPNMDv9tQqXNphW",
 			"enabled" : true,
 			"member" : {"firstName": "Flavio",
 						"lastName" : "Troia",
@@ -25,7 +25,7 @@
 			"name" : "Silvio Troia",
 			"club" : {"name" : "Castelli Svevi"},
 			"username" : "silvio",
-			"password" : "troia",
+			"password" : "$2a$08$E4oPsyc/wo4DDZfmZn8WsuVPGupajk6LGP8Re1wPNMDv9tQqXNphW",
 			"enabled" : true,
 			"roles" : [{
 						"name" : "ROLE_USER"
@@ -37,7 +37,7 @@
 			"name" : "Andrea Strippoli",
 			"club" : {"name" : "Castelli Svevi"},
 			"username" : "andrea",
-			"password" : "strippoli",
+			"password" : "$2a$08$b0.pnaStnVxvSFYkGfJPG.yMY8.BK8UAtIy9T5b95mkLHpEPLNRMO",
 			"enabled" : true,
 			"version" : "0"
 		},
@@ -46,7 +46,7 @@
 			"name" : "Claudio Pomo",
 			"club" : {"name" : "Castelli Svevi"},
 			"username" : "claudio",
-			"password" : "pomo",
+			"password" : "$2a$08$/nVoeqnxY..Hc6kSY0AqX.lEUb9EoYP2RKtMTQwyNvzrzRSVcUY/S",
 			"enabled" : false,
 			"version" : "0"
 		},
@@ -55,7 +55,7 @@
 			"name" : "Francesco Bruni",
 			"club" : {"name" : "Castelli Svevi"},
 			"username" : "francesco",
-			"password" : "bruni",
+			"password" : "$2a$08$IPYEpP5I3JhnnTJCPqLUJ.m4yQZ3L/vIXF1btJ76LII3Lhyh6nkbm",
 			"enabled" : false,
 			"version" : "0"
 		},
@@ -64,7 +64,7 @@
 			"name" : "Stefania Piccolo",
 			"club" : {"name" : "Castelli Svevi"},
 			"username" : "stefania",
-			"password" : "piccolo",
+			"password" : "$2a$08$9UHyG4B.tN.2y.ZExW9ra.Oqa/KC0yCdai3O2eH/J61jYkLKLtAca",
 			"enabled" : false,
 			"version" : "0"
 		}

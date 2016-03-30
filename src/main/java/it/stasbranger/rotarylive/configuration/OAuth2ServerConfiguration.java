@@ -35,8 +35,7 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) 
       throws Exception {
         oauthServer.tokenKeyAccess("permitAll()")
-        .checkTokenAccess("isAuthenticated()")
-        .passwordEncoder(new BCryptPasswordEncoder());
+        .checkTokenAccess("isAuthenticated()");
     }
 
 	@Override

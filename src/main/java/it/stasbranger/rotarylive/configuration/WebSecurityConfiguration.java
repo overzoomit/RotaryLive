@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
 import it.stasbranger.rotarylive.service.CustomUserDetailsService;
@@ -50,9 +52,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			@Override
 			public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 				String email = (String) authentication.getPrincipal();
+				
+				PasswordEncoder encoder = new BCryptPasswordEncoder();
+				
 				String providedPassword = (String) authentication.getCredentials();
 				UserDetails user = userDetailsService.loadUserByUsername(email);
-				if (user == null || !user.getPassword().equals(providedPassword)) {
+				if (user == null || !encoder.matches(providedPassword, user.getPassword())) {
 					throw new BadCredentialsException("Username/Password does not match for " + authentication.getPrincipal());
 				}
 

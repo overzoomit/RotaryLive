@@ -23,19 +23,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired private UserRepository userRepository;
 	@Autowired private RoleService roleService;
 	@Autowired private AttachService attachService;
-	
+
 	public void create(User user) throws Exception {
 		if(userRepository.findByUsername(user.getUsername())!=null) throw new DuplicateKeyException("this account already exists");
 
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-		
-		List<Role> roles = user.getRoles();
-		if(roles == null || roles.isEmpty()){
-			Role role = roleService.findByName("ROLE_USER");
-			roles = new ArrayList<Role>();
-			roles.add(role);	
-			user.setRoles(roles);
-		}
+
+		Role role = roleService.findByName("ROLE_USER");
+		List<Role> roles = new ArrayList<Role>();
+		roles.add(role);	
+		user.setRoles(roles);
+
 		userRepository.save(user);
 	}
 

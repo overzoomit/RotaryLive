@@ -52,19 +52,16 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 	}
 	
 	@Test
-	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"UserControllerTests.json", "RoleControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void signupTEST() throws Exception {
 		
-		JSONObject json = new JSONObject();
-		json.put("name", "Mickey Mouse");
-		json.put("clubName", "Rotary Club Disney");
-		json.put("username", "mickey");
-		json.put("password", "mouse");
+		String content = "{\"name\":\"Flavio Troia\",\"club\":{\"name\":\"Rotary Club Andria\"},\"username\":\"test\",\"password\":\"test\"}";
+		JSONObject json = new JSONObject(content);
 		
 		mvc.perform(post("/signup")
 				.content(json.toString())
 				.contentType("application/json")
-				.accept(MediaType.APPLICATION_JSON)
+				.accept(MediaType.parseMediaType("application/json"))
 				)
 		.andExpect(status().isCreated())
 		.andExpect(content().contentType("application/json"));
@@ -74,7 +71,7 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void signupConflictTEST() throws Exception {
 		
-		String content = "{\"name\":\"Flavio Troia\",\"club\":{\"name\":\"Rotary Club Andria\"},\"username\":\"test\",\"password\":\"mypassword\"}";
+		String content = "{\"name\":\"Flavio Troia\",\"club\":{\"name\":\"Rotary Club Andria\"},\"username\":\"flavio\",\"password\":\"mypassword\"}";
 		JSONObject json = new JSONObject(content);
 		mvc.perform(post("/signup")
 				.content(json.toString())
