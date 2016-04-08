@@ -2,6 +2,7 @@ package it.stasbranger.rotarylive.service;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,11 +28,11 @@ public class RoleServiceImpl implements RoleService {
 		roleRepository.delete(role);
 	}
 	
-	public void delete(String id){
+	public void delete(ObjectId id){
 		roleRepository.delete(id);
 	}
 	
-	public Role findOne(String id){
+	public Role findOne(ObjectId id){
 		return roleRepository.findOne(id);
 	}
 	

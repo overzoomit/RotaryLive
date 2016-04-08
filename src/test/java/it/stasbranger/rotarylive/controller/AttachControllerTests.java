@@ -47,15 +47,10 @@ public class AttachControllerTests extends RotaryLiveApplicationTests {
 	}
 	
 	@Test
-	@UsingDataSet(locations={"AttachControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"AttachControllerTests.json"/*, "UserControllerTests.json"*/}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void showFileTEST() throws Exception {
-		String result = mvc.perform(get("/api/attach/image/NTZmYWIxN2VlNGIwNzRiMWU2YjZjYjc5_D191BA3652207C989767772987AF7693").contentType("application/json")
+		mvc.perform(get("/api/attach/image/5707859be4b0820ad86399f4").contentType("application/json")
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andExpect(content().contentType("application/json"))
-				.andReturn().getResponse().getContentAsString();
-
-		JSONObject json = new JSONObject(result);
-		System.out.println(json.toString());
+				.andExpect(status().isOk());
 	}
 }

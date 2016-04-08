@@ -1,71 +1,71 @@
 {"user" : [
 		{
-			"_id" : "1",
+			"_id" : {$oid: "56fab17ee4b074b1e6b6cb01"},
 			"name" : "Flavio Troia",
-			"club" : {"name" : "Castelli Svevi"},
+			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 			"username" : "flavio",
 			"password" : "$2a$08$E4oPsyc/wo4DDZfmZn8WsuVPGupajk6LGP8Re1wPNMDv9tQqXNphW",
-			"enabled" : true,
+			"verified" : true,
 			"member" : {"firstName": "Flavio",
 						"lastName" : "Troia",
 						"telephone" : "02334380922",
 						"mobile" : "34733423322",
-						"uriCode" : "NTZmYWIxN2VlNGIwNzRiMWU2YjZjYjc5_D191BA3652207C989767772987AF7693",
+						"photoId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 						"address" : {"city" :"Andria",
 									 "street" : "Via Sosta San Riccardo 28"}
 						},
-			"job"	: {"name":"Ingegnere"},			
+			"job"	: {"headline":"Ingegnere"},			
 			"roles" : [{
 						"name" : "ROLE_ADMIN"
 						}],			
 			"version" : "0"
 		},
 		{
-			"_id" : "2",
+			"_id" : {$oid: "56fab17ee4b074b1e6b6cb02"},
 			"name" : "Silvio Troia",
-			"club" : {"name" : "Castelli Svevi"},
+			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 			"username" : "silvio",
 			"password" : "$2a$08$E4oPsyc/wo4DDZfmZn8WsuVPGupajk6LGP8Re1wPNMDv9tQqXNphW",
-			"enabled" : true,
+			"verified" : true,
 			"roles" : [{
 						"name" : "ROLE_USER"
 						}],		
 			"version" : "0"
 		},
 		{
-			"_id" : "3",
+			"_id" : {$oid: "56fab17ee4b074b1e6b6cb03"},
 			"name" : "Andrea Strippoli",
-			"club" : {"name" : "Castelli Svevi"},
+			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 			"username" : "andrea",
 			"password" : "$2a$08$b0.pnaStnVxvSFYkGfJPG.yMY8.BK8UAtIy9T5b95mkLHpEPLNRMO",
-			"enabled" : true,
+			"verified" : true,
 			"version" : "0"
 		},
 		{
-			"_id" : "4",
+			"_id" : {$oid: "56fab17ee4b074b1e6b6cb04"},
 			"name" : "Claudio Pomo",
-			"club" : {"name" : "Castelli Svevi"},
+			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 			"username" : "claudio",
 			"password" : "$2a$08$/nVoeqnxY..Hc6kSY0AqX.lEUb9EoYP2RKtMTQwyNvzrzRSVcUY/S",
-			"enabled" : false,
+			"verified" : false,
 			"version" : "0"
 		},
 		{
-			"_id" : "5",
+			"_id" : {$oid: "56fab17ee4b074b1e6b6cb05"},
 			"name" : "Francesco Bruni",
-			"club" : {"name" : "Castelli Svevi"},
+			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 			"username" : "francesco",
 			"password" : "$2a$08$IPYEpP5I3JhnnTJCPqLUJ.m4yQZ3L/vIXF1btJ76LII3Lhyh6nkbm",
-			"enabled" : false,
+			"verified" : false,
 			"version" : "0"
 		},
 		{
-			"_id" : "6",
+			"_id" : {$oid: "56fab17ee4b074b1e6b6cb06"},
 			"name" : "Stefania Piccolo",
-			"club" : {"name" : "Castelli Svevi"},
+			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 			"username" : "stefania",
 			"password" : "$2a$08$9UHyG4B.tN.2y.ZExW9ra.Oqa/KC0yCdai3O2eH/J61jYkLKLtAca",
-			"enabled" : false,
+			"verified" : false,
 			"version" : "0"
 		}
 	]

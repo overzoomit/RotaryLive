@@ -1,0 +1,16 @@
+{ 
+	"club" : [
+		{
+			"_id" : {$oid: "56fab17ee4b074b1e6b6ca80"},
+			"name" : "Rotary Club Andria Castelli Svevi",
+			"address" : "Hotel L'Ottagono - via Barletta 138",
+			"zipCode" : "76123",
+			"city"	  : "Andria",
+			"province": "BT",
+			"country" : "Italy",
+			"logoId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
+			"version" : "0"
+		}
+
+	]
+}

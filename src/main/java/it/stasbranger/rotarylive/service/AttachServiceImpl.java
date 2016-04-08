@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -48,11 +49,11 @@ public class AttachServiceImpl implements AttachService {
 		attachRepository.delete(attach);
 	}
 	
-	public void delete(String id){
+	public void delete(ObjectId id){
 		attachRepository.delete(id);
 	}
 	
-	public Attach findOne(String id){
+	public Attach findOne(ObjectId id){
 		return attachRepository.findOne(id);
 	}
 	
@@ -84,7 +85,7 @@ public class AttachServiceImpl implements AttachService {
 		byte[] bfile = file.getBytes();
 		
 		Attach attach = new Attach();
-		attach.setTipo(type);
+		attach.setType(type);
 		attach.setContentType(contentType);
 
 		InputStream imputStream = new ByteArrayInputStream(bfile);
@@ -108,6 +109,14 @@ public class AttachServiceImpl implements AttachService {
 
 			// set thumbnail
 			thumbnail(file, nameFile);
+		}else if(type.startsWith("LOGO")){	
+			// ridimensiono immagine
+			String ext = contentType.replace("image/", "").equals("jpeg")? "jpg":contentType.replace("image/", "");
+			file2write = imageService.prepareToScale(imputStream, ext, 300, "0");
+			path = basePathStorage+pathtype+"/" + cal.getTimeInMillis() + "." + ext;
+			
+			// set thumbnail
+			thumbnail(file, nameFile);
 		}else if(type.startsWith("CROP")){	
 			// non ridimensiono immagine
 			file2write = bfile;
@@ -128,10 +137,6 @@ public class AttachServiceImpl implements AttachService {
 
 		attach.setPathFile(path);
 		attach.setOriginalFilename(file.getOriginalFilename());
-		attach = attachRepository.save(attach);
-		String code = utilityService.encodeID(attach.getId());
-		attach.setUriCode(code);
-
 		return attachRepository.save(attach);
 	}
 

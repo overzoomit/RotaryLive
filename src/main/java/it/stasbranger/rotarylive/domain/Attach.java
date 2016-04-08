@@ -1,24 +1,21 @@
 package it.stasbranger.rotarylive.domain;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Attach {
 
 	@Id
-	private String id;
+	private ObjectId id;
 	
-	private String tipo;
+	private String type;
 
-    private String nota;
+    private String note;
 
     private String pathFile;
-    
-    @Indexed(unique = true)
-    private String uriCode;
     
     private String contentType;
     
@@ -27,28 +24,28 @@ public class Attach {
     @Version
 	private String version;
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getType() {
+		return type;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getNota() {
-		return nota;
+	public String getNote() {
+		return note;
 	}
 
-	public void setNota(String nota) {
-		this.nota = nota;
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public String getPathFile() {
@@ -57,14 +54,6 @@ public class Attach {
 
 	public void setPathFile(String pathFile) {
 		this.pathFile = pathFile;
-	}
-
-	public String getUriCode() {
-		return uriCode;
-	}
-
-	public void setUriCode(String uriCode) {
-		this.uriCode = uriCode;
 	}
 
 	public String getContentType() {

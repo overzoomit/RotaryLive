@@ -5,16 +5,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Job {
 
-	private String name;
+	private String headline;
 	
 	private String note;
 	
-	public String getName() {
-		return name;
+	public String getHeadline() {
+		return headline;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setHeadline(String headline) {
+		this.headline = headline;
 	}
 
 	public String getNote() {

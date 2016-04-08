@@ -2,6 +2,7 @@ package it.stasbranger.rotarylive.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -48,7 +49,7 @@ public class UserController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public HttpEntity<Resource<User>> showUser(@PathVariable String id) {
+	public HttpEntity<Resource<User>> showUser(@PathVariable ObjectId id) {
 		try{
 			User user = this.userService.findOne(id);
 			if(user == null){
@@ -71,7 +72,7 @@ public class UserController {
 				return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
 			}
 			Resource<User> resource = userResourceAssembler.toResource(user);
-			if(user.getEnabled()){
+			if(user.getVerified()){
 				return new ResponseEntity<Resource<User>>(resource, HttpStatus.OK);
 			}else{
 				return new ResponseEntity<Resource<User>>(resource, HttpStatus.LOCKED);
@@ -96,7 +97,7 @@ public class UserController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public HttpEntity<Resource<User>> updateUser(@PathVariable String id, @RequestBody User user) {
+	public HttpEntity<Resource<User>> updateUser(@PathVariable ObjectId id, @RequestBody User user) {
 		user.setId(id);
 
 		if(this.userService.findOne(id) == null){
@@ -108,7 +109,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public HttpEntity<Resource<User>> deleteUser(@PathVariable String id) {
+	public HttpEntity<Resource<User>> deleteUser(@PathVariable ObjectId id) {
 		if(this.userService.findOne(id) == null){
 			return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
 		}

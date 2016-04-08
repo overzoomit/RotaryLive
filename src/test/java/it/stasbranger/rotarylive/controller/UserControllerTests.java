@@ -50,12 +50,11 @@ public class UserControllerTests extends RotaryLiveApplicationTests {
 	}
 
 	@Test
-	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"AttachControllerTests.json", "ClubControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void showUsersTEST() throws Exception {
 		String result = mvc.perform(get("/api/user").contentType("application/json")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().contentType("application/json"))
 				.andReturn().getResponse().getContentAsString();
 
 		JSONObject json = new JSONObject(result);
@@ -76,7 +75,6 @@ public class UserControllerTests extends RotaryLiveApplicationTests {
 		String result = mvc.perform(get("/api/user/me").contentType("application/json")
 				.accept(MediaType.APPLICATION_JSON).principal(principal))
 				.andExpect(status().isOk())
-				.andExpect(content().contentType("application/json"))
 				.andReturn().getResponse().getContentAsString();
 
 		JSONObject json = new JSONObject(result);

@@ -2,13 +2,14 @@ package it.stasbranger.rotarylive.domain;
 
 import java.util.Date;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 
 public class Booking {
 
 	@Id
-	private String id;
+	private ObjectId id;
 
 	private Event event;
 	
@@ -26,11 +27,11 @@ public class Booking {
 	public Booking() {
 	}
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

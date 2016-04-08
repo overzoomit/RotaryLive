@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
@@ -45,11 +46,11 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(user);
 	}
 
-	public void delete(String id){
+	public void delete(ObjectId id){
 		userRepository.delete(id);
 	}
 
-	public User findOne(String id){
+	public User findOne(ObjectId id){
 		return userRepository.findOne(id);
 	}
 
@@ -72,8 +73,7 @@ public class UserServiceImpl implements UserService {
 			if(user.getId() == null) user = update(user);
 			String type = "IMAGE_PROFILE";
 			Attach attach = attachService.createAttach(image, type);
-
-			user.getMember().setUriCode(attach.getUriCode());
+			user.getMember().setPhotoId(attach.getId());
 			user = userRepository.save(user);
 		}
 		return user;

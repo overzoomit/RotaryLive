@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Resources;
@@ -28,8 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import it.stasbranger.rotarylive.dao.AttachRepository;
 import it.stasbranger.rotarylive.domain.Attach;
-import it.stasbranger.rotarylive.service.AttachService;
 import it.stasbranger.rotarylive.service.utility.UtilityService;
 
 @RestController
@@ -37,7 +38,7 @@ import it.stasbranger.rotarylive.service.utility.UtilityService;
 @ExposesResourceFor(Attach.class)
 public class AttachController {
 
-	@Autowired private AttachService attachService;
+	@Autowired private AttachRepository attachRepository;
 	@Autowired UtilityService utilityService;
 	
 	@InitBinder
@@ -46,11 +47,10 @@ public class AttachController {
     }
 	
 	@RequestMapping(value = { "/file/{code}", "/image/{code}", "/thumbnail/{code}" }, method = RequestMethod.GET)
-    public HttpEntity<Resources<Attach>> showFile(@PathVariable("code") String code, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+    public HttpEntity<Resources<Attach>> showFile(@PathVariable("code") ObjectId code, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
         String uri = request.getRequestURI();
         try {
-            String id = utilityService.dencodeID(code);
-            Attach attach = attachService.findOne(id);
+            Attach attach = attachRepository.findOne(code);
             String pathFile = attach.getPathFile();
             if(uri.contains("/thumbnail/")) {
             	pathFile = attach.getPathFile();

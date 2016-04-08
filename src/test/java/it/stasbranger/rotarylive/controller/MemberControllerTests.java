@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.FileInputStream;
 
+import org.bson.types.ObjectId;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
@@ -55,17 +56,17 @@ public class MemberControllerTests extends RotaryLiveApplicationTests {
 	}
 	
 	@Test
-	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"AttachControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void updateWithImageTEST() throws Exception {
 		FileInputStream fis = new FileInputStream("src/main/resources/static/flavio.jpeg");
 		MockMultipartFile data = new MockMultipartFile("file","flavio.jpeg", "image/jpeg", fis);
 
 		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");
 
-		User user = userService.findOne("1");
-		String uriCode = user.getMember() == null ? null : user.getMember().getUriCode();
+		User user = userService.findOne(new ObjectId("56fab17ee4b074b1e6b6cb01"));
+		ObjectId photoId = user.getMember() == null ? null : user.getMember().getPhotoId();
 
-		String result = mvc.perform(MockMvcRequestBuilders.fileUpload("/api/member/1/image").file(data)
+		String result = mvc.perform(MockMvcRequestBuilders.fileUpload("/api/member/56fab17ee4b074b1e6b6cb01/image").file(data)
 				.accept(MediaType.APPLICATION_JSON).principal(principal))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -73,21 +74,21 @@ public class MemberControllerTests extends RotaryLiveApplicationTests {
 
 		JSONObject json = new JSONObject(result);
 		JSONObject member = json.getJSONObject("member");
-		assertTrue(member.get("uriCode")!=uriCode);
+		assertTrue(member.get("photoId")!=photoId.toString());
 	}
 	
 	@Test
-	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"AttachControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void updateWithImageTEST2() throws Exception {
 		FileInputStream fis = new FileInputStream("src/main/resources/static/flavio2.jpg");
 		MockMultipartFile data = new MockMultipartFile("file","flavio2.jpg", "image/jpeg", fis);
 
 		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");
 
-		User user = userService.findOne("2");
-		String uriCode = user.getMember() == null ? null : user.getMember().getUriCode();
+		User user = userService.findOne(new ObjectId("56fab17ee4b074b1e6b6cb01"));
+		ObjectId photoId = user.getMember() == null ? null : user.getMember().getPhotoId();
 
-		String result = mvc.perform(MockMvcRequestBuilders.fileUpload("/api/member/2/image").file(data)
+		String result = mvc.perform(MockMvcRequestBuilders.fileUpload("/api/member/56fab17ee4b074b1e6b6cb01/image").file(data)
 				.accept(MediaType.APPLICATION_JSON).principal(principal))
 				.andDo(print())
 				.andExpect(status().isOk())
@@ -95,6 +96,6 @@ public class MemberControllerTests extends RotaryLiveApplicationTests {
 
 		JSONObject json = new JSONObject(result);
 		JSONObject member = json.getJSONObject("member");
-		assertTrue(member.get("uriCode")!=uriCode);
+		assertTrue(member.get("photoId")!=photoId.toString());
 	}
 }

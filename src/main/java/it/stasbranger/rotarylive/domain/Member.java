@@ -1,5 +1,6 @@
 package it.stasbranger.rotarylive.domain;
 
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,7 +29,7 @@ public class Member {
     @Transient
     private MultipartFile file;
     
-    private String uriCode;
+    private ObjectId photoId;
 	
 	public String getFirstName() {
 		return firstName;
@@ -78,12 +79,12 @@ public class Member {
 		this.file = file;
 	}
 
-	public String getUriCode() {
-		return uriCode;
+	public ObjectId getPhotoId() {
+		return photoId;
 	}
 
-	public void setUriCode(String uriCode) {
-		this.uriCode = uriCode;
+	public void setPhotoId(ObjectId photoId) {
+		this.photoId = photoId;
 	}
 
 	public Job getJob() {

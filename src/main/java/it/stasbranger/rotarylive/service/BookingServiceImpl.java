@@ -2,6 +2,7 @@ package it.stasbranger.rotarylive.service;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,11 @@ public class BookingServiceImpl implements BookingService {
 		bookingRepository.delete(booking);
 	}
 	
-	public void delete(String id){
+	public void delete(ObjectId id){
 		bookingRepository.delete(id);
 	}
 	
-	public Booking findOne(String id){
+	public Booking findOne(ObjectId id){
 		return bookingRepository.findOne(id);
 	}
 	

@@ -4,7 +4,6 @@ import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder
 import static com.lordofthejars.nosqlunit.mongodb.ReplicationMongoDbConfigurationBuilder.replicationMongoDbConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.json.JSONObject;
@@ -52,10 +51,10 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 	}
 	
 	@Test
-	@UsingDataSet(locations={"UserControllerTests.json", "RoleControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"UserControllerTests.json", "RoleControllerTests.json", "ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void signupTEST() throws Exception {
 		
-		String content = "{\"name\":\"Flavio Troia\",\"club\":{\"name\":\"Rotary Club Andria\"},\"username\":\"test\",\"password\":\"test\"}";
+		String content = "{\"name\":\"Flavio Troia\",\"clubId\":{$oid: \"56fab17ee4b074b1e6b6cb79\"},\"username\":\"test\",\"password\":\"test\"}";
 		JSONObject json = new JSONObject(content);
 		
 		mvc.perform(post("/signup")
@@ -63,22 +62,20 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 				.contentType("application/json")
 				.accept(MediaType.parseMediaType("application/json"))
 				)
-		.andExpect(status().isCreated())
-		.andExpect(content().contentType("application/json"));
+		.andExpect(status().isCreated());
 	}
 	
 	@Test
-	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void signupConflictTEST() throws Exception {
 		
-		String content = "{\"name\":\"Flavio Troia\",\"club\":{\"name\":\"Rotary Club Andria\"},\"username\":\"flavio\",\"password\":\"mypassword\"}";
+		String content = "{\"name\":\"Flavio Troia\",\"clubId\":{$oid: \"56fab17ee4b074b1e6b6cb79\"},\"username\":\"flavio\",\"password\":\"mypassword\"}";
 		JSONObject json = new JSONObject(content);
 		mvc.perform(post("/signup")
 				.content(json.toString())
 				.contentType("application/json")
 				.accept(MediaType.parseMediaType("application/json"))
 				)
-		.andExpect(status().isConflict())
-		.andExpect(content().contentType("application/json"));
+		.andExpect(status().isConflict());
 	}
 }

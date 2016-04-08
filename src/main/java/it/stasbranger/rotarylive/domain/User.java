@@ -3,6 +3,7 @@ package it.stasbranger.rotarylive.domain;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
@@ -13,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class User {
 
 	@Id
-	private String id;
+	private ObjectId id;
 
 	private Date creationDate = new Date();
 	
@@ -21,7 +22,7 @@ public class User {
 	private String name;
 	
 	@NotEmpty
-	private Club club;
+	private ObjectId clubId;
 
 	@NotEmpty
 	@Indexed(unique = true)
@@ -30,7 +31,7 @@ public class User {
 	@NotEmpty
 	private String password;
 
-	private Boolean enabled = false;
+	private Boolean verified = false;
 	
 	private Member member;
 
@@ -44,16 +45,16 @@ public class User {
 
 	public User(User user) {
 		this.name = user.getName();
-		this.club = user.getClub();
+		this.clubId = user.getClubId();
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 	}
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -97,12 +98,12 @@ public class User {
 		this.version = version;
 	}
 
-	public Club getClub() {
-		return club;
+	public ObjectId getClubId() {
+		return clubId;
 	}
 
-	public void setClub(Club club) {
-		this.club = club;
+	public void setClubId(ObjectId clubId) {
+		this.clubId = clubId;
 	}
 
 	public Member getMember() {
@@ -121,11 +122,12 @@ public class User {
 		this.creationDate = creationDate;
 	}
 
-	public Boolean getEnabled() {
-		return enabled;
+	public Boolean getVerified() {
+		return verified;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setVerified(Boolean verified) {
+		this.verified = verified;
 	}
+
 }
