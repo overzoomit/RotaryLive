@@ -18,6 +18,6 @@ public interface ClubService {
 	public Page<Club> findAll(Pageable pageable);
 	public void delete(ObjectId id);
 	public void delete(Club club);
-	public List<Club> findByNameLike(String name);
+	public Page<Club> findByNameLike(String name, Pageable pageable);
 	public Club addImage(Club club) throws IOException;
 }

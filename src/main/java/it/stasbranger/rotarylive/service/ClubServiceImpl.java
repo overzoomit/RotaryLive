@@ -48,8 +48,8 @@ public class ClubServiceImpl implements ClubService {
 		return clubRepository.findAll(pageable);
 	}
 	
-	public List<Club> findByNameLike(String name){
-		return clubRepository.findByNameLike(name);
+	public Page<Club> findByNameLike(String name, Pageable pageable){
+		return clubRepository.findByNameLike(name, pageable);
 	}
 	
 	public Club addImage(Club club) throws IOException {
