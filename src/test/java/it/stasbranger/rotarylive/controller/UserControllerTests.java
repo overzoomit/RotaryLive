@@ -5,7 +5,6 @@ import static com.lordofthejars.nosqlunit.mongodb.ReplicationMongoDbConfiguratio
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.json.JSONArray;
@@ -67,7 +66,7 @@ public class UserControllerTests extends RotaryLiveApplicationTests {
 	}
 	
 	@Test
-	@UsingDataSet(locations="UserControllerTests.json", loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"ClubControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void showMeTEST() throws Exception {
 	
 		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");

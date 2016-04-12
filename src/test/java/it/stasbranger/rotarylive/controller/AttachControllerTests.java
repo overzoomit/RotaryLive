@@ -4,10 +4,8 @@ import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder
 import static com.lordofthejars.nosqlunit.mongodb.ReplicationMongoDbConfigurationBuilder.replicationMongoDbConfiguration;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,7 +45,7 @@ public class AttachControllerTests extends RotaryLiveApplicationTests {
 	}
 	
 	@Test
-	@UsingDataSet(locations={"AttachControllerTests.json"/*, "UserControllerTests.json"*/}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"AttachControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void showFileTEST() throws Exception {
 		mvc.perform(get("/api/attach/image/5707859be4b0820ad86399f4").contentType("application/json")
 				.accept(MediaType.APPLICATION_JSON))

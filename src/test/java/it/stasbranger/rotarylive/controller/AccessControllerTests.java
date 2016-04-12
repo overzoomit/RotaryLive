@@ -51,10 +51,10 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 	}
 	
 	@Test
-	@UsingDataSet(locations={"UserControllerTests.json", "RoleControllerTests.json", "ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={"RoleControllerTests.json", "ClubControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void signupTEST() throws Exception {
 		
-		String content = "{\"name\":\"Flavio Troia\",\"clubId\":{$oid: \"56fab17ee4b074b1e6b6cb79\"},\"username\":\"test\",\"password\":\"test\"}";
+		String content = "{\"name\":\"Flavio Troia\", \"club\": {\"id\":\"56fab17ee4b074b1e6b6ca80\", \"name\":\"Rotary Club Andria Castelli Svevi\", \"address\":\"Hotel L'Ottagono - via Barletta 138\", \"zipCode\":\"76123\", \"city\":\"Andria\", \"province\":\"BT\", \"country\":\"Italy\", \"logoId\":\"56fab17ee4b074b1e6b6cb79\", \"version\":\"0\"}, \"username\":\"test\",\"password\":\"test\"}";
 		JSONObject json = new JSONObject(content);
 		
 		mvc.perform(post("/signup")
@@ -66,11 +66,11 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 	}
 	
 	@Test
-	@UsingDataSet(locations={"UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	@UsingDataSet(locations={ "UserControllerTests.json", "ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void signupConflictTEST() throws Exception {
 		
-		String content = "{\"name\":\"Flavio Troia\",\"clubId\":{$oid: \"56fab17ee4b074b1e6b6cb79\"},\"username\":\"flavio\",\"password\":\"mypassword\"}";
-		JSONObject json = new JSONObject(content);
+		String content = "{\"name\":\"Flavio Troia\", \"club\":{\"id\":\"56fab17ee4b074b1e6b6ca80\", \"name\":\"Rotary Club Andria Castelli Svevi\", \"address\":\"Hotel L'Ottagono - via Barletta 138\", \"zipCode\":\"76123\", \"city\":\"Andria\", \"province\":\"BT\", \"country\":\"Italy\", \"logoId\":\"56fab17ee4b074b1e6b6cb79\", \"version\":\"0\"}, \"username\":\"flavio\",\"password\":\"mypassword\"}";
+		JSONObject json = new JSONObject(content); 
 		mvc.perform(post("/signup")
 				.content(json.toString())
 				.contentType("application/json")

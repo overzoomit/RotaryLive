@@ -2,7 +2,7 @@
 		{
 			"_id" : {$oid: "56fab17ee4b074b1e6b6cb01"},
 			"name" : "Flavio Troia",
-			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
+			"club" : {"$ref": "club", "$id" : {"$oid": "56fab17ee4b074b1e6b6ca80"}},
 			"username" : "flavio",
 			"password" : "$2a$08$E4oPsyc/wo4DDZfmZn8WsuVPGupajk6LGP8Re1wPNMDv9tQqXNphW",
 			"verified" : true,
@@ -23,7 +23,7 @@
 		{
 			"_id" : {$oid: "56fab17ee4b074b1e6b6cb02"},
 			"name" : "Silvio Troia",
-			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
+			"club" : {"$ref": "club", "$id" : {"$oid": "56fab17ee4b074b1e6b6ca80"}},
 			"username" : "silvio",
 			"password" : "$2a$08$E4oPsyc/wo4DDZfmZn8WsuVPGupajk6LGP8Re1wPNMDv9tQqXNphW",
 			"verified" : true,
@@ -35,7 +35,7 @@
 		{
 			"_id" : {$oid: "56fab17ee4b074b1e6b6cb03"},
 			"name" : "Andrea Strippoli",
-			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
+			"club" : {"$ref": "club", "$id" : {"$oid": "56fab17ee4b074b1e6b6ca80"}},
 			"username" : "andrea",
 			"password" : "$2a$08$b0.pnaStnVxvSFYkGfJPG.yMY8.BK8UAtIy9T5b95mkLHpEPLNRMO",
 			"verified" : true,
@@ -44,7 +44,7 @@
 		{
 			"_id" : {$oid: "56fab17ee4b074b1e6b6cb04"},
 			"name" : "Claudio Pomo",
-			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
+			"club" : {"$ref": "club", "$id" : {"$oid": "56fab17ee4b074b1e6b6ca80"}},
 			"username" : "claudio",
 			"password" : "$2a$08$/nVoeqnxY..Hc6kSY0AqX.lEUb9EoYP2RKtMTQwyNvzrzRSVcUY/S",
 			"verified" : false,
@@ -53,7 +53,7 @@
 		{
 			"_id" : {$oid: "56fab17ee4b074b1e6b6cb05"},
 			"name" : "Francesco Bruni",
-			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
+			"club" : {"$ref": "club", "$id" : {"$oid": "56fab17ee4b074b1e6b6ca80"}},
 			"username" : "francesco",
 			"password" : "$2a$08$IPYEpP5I3JhnnTJCPqLUJ.m4yQZ3L/vIXF1btJ76LII3Lhyh6nkbm",
 			"verified" : false,
@@ -62,7 +62,7 @@
 		{
 			"_id" : {$oid: "56fab17ee4b074b1e6b6cb06"},
 			"name" : "Stefania Piccolo",
-			"clubId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
+			"club" : {"$ref": "club", "$id" : {"$oid": "56fab17ee4b074b1e6b6ca80"}},
 			"username" : "stefania",
 			"password" : "$2a$08$9UHyG4B.tN.2y.ZExW9ra.Oqa/KC0yCdai3O2eH/J61jYkLKLtAca",
 			"verified" : false,
