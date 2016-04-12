@@ -4,9 +4,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
+
 public class Location {
 
 	@Id
+	@JsonSerialize(using=ObjectIdSerializer.class)
 	private String id;
 
 	@NotEmpty

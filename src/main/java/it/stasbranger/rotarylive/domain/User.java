@@ -8,12 +8,18 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
 
 @Document
 public class User {
 
 	@Id
+	@JsonSerialize(using=ObjectIdSerializer.class)
 	private ObjectId id;
 
 	private Date creationDate = new Date();
@@ -22,7 +28,8 @@ public class User {
 	private String name;
 	
 	@NotEmpty
-	private ObjectId clubId;
+	@DBRef
+	private Club club;
 
 	@NotEmpty
 	@Indexed(unique = true)
@@ -45,7 +52,7 @@ public class User {
 
 	public User(User user) {
 		this.name = user.getName();
-		this.clubId = user.getClubId();
+		this.club = user.getClub();
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 	}
@@ -98,12 +105,12 @@ public class User {
 		this.version = version;
 	}
 
-	public ObjectId getClubId() {
-		return clubId;
+	public Club getClub() {
+		return club;
 	}
 
-	public void setClubId(ObjectId clubId) {
-		this.clubId = clubId;
+	public void setClub(Club club) {
+		this.club = club;
 	}
 
 	public Member getMember() {

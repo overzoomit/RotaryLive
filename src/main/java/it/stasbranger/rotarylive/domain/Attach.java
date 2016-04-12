@@ -5,10 +5,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
+
 @Document
 public class Attach {
 
 	@Id
+	@JsonSerialize(using=ObjectIdSerializer.class)
 	private ObjectId id;
 	
 	private String type;

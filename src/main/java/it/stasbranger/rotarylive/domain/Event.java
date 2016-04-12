@@ -7,11 +7,17 @@ import java.util.Set;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
 
 
 public class Event {
 
 	@Id
+	@JsonSerialize(using=ObjectIdSerializer.class)
 	private String id;
 
 	@NotEmpty
@@ -29,6 +35,7 @@ public class Event {
 	
 	private Date dateModified;
 	
+	@DBRef
 	private User owner;
 	
 	@Version

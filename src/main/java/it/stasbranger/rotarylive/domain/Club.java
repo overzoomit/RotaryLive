@@ -9,11 +9,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
 
 @Document
 public class Club {
 
 	@Id
+	@JsonSerialize(using=ObjectIdSerializer.class)
 	private ObjectId id;
 
     @Indexed(unique = true)
@@ -29,6 +33,7 @@ public class Club {
 
 	private String country;
 	
+	@JsonSerialize(using=ObjectIdSerializer.class)
 	private ObjectId logoId;
 	
 	@JsonIgnore

@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
 
 @Document
 public class Member {
@@ -29,6 +32,7 @@ public class Member {
     @Transient
     private MultipartFile file;
     
+	@JsonSerialize(using=ObjectIdSerializer.class)
     private ObjectId photoId;
 	
 	public String getFirstName() {
