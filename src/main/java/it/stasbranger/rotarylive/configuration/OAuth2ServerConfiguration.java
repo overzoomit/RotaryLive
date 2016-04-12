@@ -48,7 +48,7 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
                .and()
                .withClient("rotarylive")
                .secret("HgjF3RAxWBKJq6qb")
-               .authorizedGrantTypes("password","authorization_code", "refresh_token")
+               .authorizedGrantTypes("password","authorization_code", "refresh_token", "client_credentials")
                .scopes("read");
     }
  
