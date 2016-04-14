@@ -8,7 +8,7 @@
 			"verified" : true,
 			"member" : {"firstName": "Flavio",
 						"lastName" : "Troia",
-						"telephone" : "02334380922",
+						"phone" : "02334380922",
 						"mobile" : "34733423322",
 						"photoId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 						"address" : {"city" :"Andria",

@@ -61,6 +61,10 @@ public class UserServiceImpl implements UserService {
 	public Page<User> findAll(Pageable pageable){
 		return userRepository.findAll(pageable);
 	}
+	
+	public Page<User> findAll(String query, Pageable pageable){
+		return userRepository.findAll(query, pageable);
+	}
 
 	public User findByUsername(String username){
 		return userRepository.findByUsername(username);

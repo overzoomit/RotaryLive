@@ -9,5 +9,7 @@ import it.stasbranger.rotarylive.domain.Club;
 
 public interface ClubRepository extends MongoRepository<Club, ObjectId> {
 
-	public Page<Club> findByNameLike(String name, Pageable pageable);
+	public Page<Club> findByNameContainingIgnoreCase(String name, Pageable pageable);
+	
+	public Club findByName(String name);
 }

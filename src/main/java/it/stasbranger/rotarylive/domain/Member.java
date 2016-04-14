@@ -1,8 +1,8 @@
 package it.stasbranger.rotarylive.domain;
 
 import org.bson.types.ObjectId;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,19 +14,28 @@ import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
 @Document
 public class Member {
 
-	@NotEmpty
+	@TextIndexed
 	private String firstName;
 	
-	@NotEmpty
+	@TextIndexed
 	private String lastName;
 	
-	private String telephone;
+	private String gender; 
+
+	@TextIndexed(weight=2)
+	private String phone;
 	
+	@TextIndexed(weight=2)
 	private String mobile;
+	
+	@TextIndexed(weight=2)
+	private String email;
 	
 	private Address address;
 	
 	private Job job;
+	
+	private Social social;
 	
 	@JsonIgnore
     @Transient
@@ -51,12 +60,12 @@ public class Member {
 		this.lastName = lastName;
 	}
 
-	public String getTelephone() {
-		return telephone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getMobile() {
@@ -97,5 +106,21 @@ public class Member {
 
 	public void setJob(Job job) {
 		this.job = job;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Social getSocial() {
+		return social;
+	}
+
+	public void setSocial(Social social) {
+		this.social = social;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class ClubServiceImpl implements ClubService {
 	@Autowired private AttachService attachService;
 	
 	public void create(Club club){
+		if(clubRepository.findByName(club.getName())!=null) throw new DuplicateKeyException("this club already exists");
+
 		clubRepository.save(club);
 	}
 
@@ -48,8 +51,8 @@ public class ClubServiceImpl implements ClubService {
 		return clubRepository.findAll(pageable);
 	}
 	
-	public Page<Club> findByNameLike(String name, Pageable pageable){
-		return clubRepository.findByNameLike(name, pageable);
+	public Page<Club> findByNameContainingIgnoreCase(String name, Pageable pageable){
+		return clubRepository.findByNameContainingIgnoreCase(name, pageable);
 	}
 	
 	public Club addImage(Club club) throws IOException {

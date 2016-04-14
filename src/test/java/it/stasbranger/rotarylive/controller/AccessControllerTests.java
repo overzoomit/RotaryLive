@@ -2,10 +2,13 @@ package it.stasbranger.rotarylive.controller;
 
 import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder.newMongoDbRule;
 import static com.lordofthejars.nosqlunit.mongodb.ReplicationMongoDbConfigurationBuilder.replicationMongoDbConfiguration;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Rule;
@@ -77,5 +80,24 @@ public class AccessControllerTests extends RotaryLiveApplicationTests {
 				.accept(MediaType.parseMediaType("application/json"))
 				)
 		.andExpect(status().isConflict());
+	}
+	
+	@Test
+	@UsingDataSet(locations={"ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	public void showClubsTEST() throws Exception {
+		String result = mvc.perform(get("/club")
+				.param("q", "cas")
+				.contentType("application/json")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+
+		JSONObject json = new JSONObject(result);
+		JSONObject emb = json.getJSONObject("_embedded");
+		JSONArray array = emb.getJSONArray("clubList");
+		for (int i = 0; i < array.length(); i++) {
+			JSONObject j = array.getJSONObject(i);
+			assertTrue(j.get("name").toString().contains("Castelli Svevi"));
+		}
 	}
 }

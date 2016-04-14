@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.ExposesResourceFor;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,8 +43,9 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody 
-	public HttpEntity<PagedResources<UserResource>> showUsers(@PageableDefault Pageable pageable, PagedResourcesAssembler<User> assembler) {
-		Page<User> users = this.userService.findAll(pageable);
+	public HttpEntity<PagedResources<UserResource>> showUsers(@RequestParam(value = "q", required = false) String query, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.DESC, sort = "name") Pageable pageable, PagedResourcesAssembler<User> assembler) {
+		
+		Page<User> users = (query == null || query.trim().equals("")) ? this.userService.findAll(pageable) : this.userService.findAll(query, pageable);
 		PagedResources<UserResource> resources = assembler.toResource(users, userResourceAssembler);
 		return new ResponseEntity<PagedResources<UserResource>>(resources, HttpStatus.OK);
 	}

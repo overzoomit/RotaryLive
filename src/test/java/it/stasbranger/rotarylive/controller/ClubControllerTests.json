@@ -9,6 +9,8 @@
 			"province": "BT",
 			"country" : "Italy",
 			"logoId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
+			"website" : "http://rotaryandria.org",
+			"email" : "info@rotaryandria.org",
 			"version" : "0"
 		}
 

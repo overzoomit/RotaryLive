@@ -5,11 +5,15 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Language;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -22,10 +26,18 @@ public class User {
 	@JsonSerialize(using=ObjectIdSerializer.class)
 	private ObjectId id;
 
-	private Date creationDate = new Date();
+	@CreatedDate
+	private Date creationDate;
+	
+	@LastModifiedDate
+	private Date lastModifiedDate;
 	
 	@NotEmpty
+	@TextIndexed
 	private String name;
+	
+	@Language
+	private String lang;
 	
 	@NotEmpty
 	@DBRef
@@ -137,4 +149,19 @@ public class User {
 		this.verified = verified;
 	}
 
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
 }
