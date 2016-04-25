@@ -18,6 +18,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +44,11 @@ public class UserController {
 
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody 
-	public HttpEntity<PagedResources<UserResource>> showUsers(@RequestParam(value = "q", required = false) String query, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.DESC, sort = "name") Pageable pageable, PagedResourcesAssembler<User> assembler) {
+	public HttpEntity<PagedResources<UserResource>> showUsers(@RequestParam(value = "q", required = false) String query, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.DESC, sort = "name") Pageable pageable, PagedResourcesAssembler<User> assembler, HttpServletRequest httpServletRequest) {
+
+		if(httpServletRequest.isUserInRole("ADMIN")){
+			System.out.println(httpServletRequest.getUserPrincipal().getName() + " IS ADMIN");
+		}		
 		
 		Page<User> users = (query == null || query.trim().equals("")) ? this.userService.findAll(pageable) : this.userService.findAll(query, pageable);
 		PagedResources<UserResource> resources = assembler.toResource(users, userResourceAssembler);
@@ -64,7 +69,7 @@ public class UserController {
 			return new ResponseEntity<Resource<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@RequestMapping(value = "/me", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public HttpEntity<Resource<User>> showPrincipal(HttpServletRequest httpServletRequest) {
@@ -74,17 +79,56 @@ public class UserController {
 			if(user == null){
 				return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
 			}
+			if(!user.getVerified()){
+				return new ResponseEntity<Resource<User>>(HttpStatus.LOCKED);
+			}
+			
 			Resource<User> resource = userResourceAssembler.toResource(user);
-			if(user.getVerified()){
-				return new ResponseEntity<Resource<User>>(resource, HttpStatus.OK);
-			}else{
-				return new ResponseEntity<Resource<User>>(resource, HttpStatus.LOCKED);
-			}	
+			return new ResponseEntity<Resource<User>>(resource, HttpStatus.OK);
+				
 		}catch(Exception e){
 			return new ResponseEntity<Resource<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
+	@RequestMapping(value = "/me", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public HttpEntity<Resource<User>> updatePrincipal(@RequestBody User user, HttpServletRequest httpServletRequest) {
+		try{
+			String username = httpServletRequest.getUserPrincipal().getName();
+			User userdb = this.userService.findByUsername(username);
+			if(userdb == null){
+				return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
+			}
+			if(!userdb.getId().equals(user.getId())){
+				return new ResponseEntity<Resource<User>>(HttpStatus.BAD_REQUEST);
+			}
+			if(!userdb.getVerified()){
+				return new ResponseEntity<Resource<User>>(HttpStatus.LOCKED);
+			}
+
+			user = this.userService.update(user);
+			Resource<User> resource = userResourceAssembler.toResource(user);
+			return new ResponseEntity<Resource<User>>(resource, HttpStatus.OK);
+
+		}catch(Exception e){
+			return new ResponseEntity<Resource<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@RequestMapping(value = "/me", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public HttpEntity<Resource<User>> deletePrincipal(HttpServletRequest httpServletRequest) {
+		String username = httpServletRequest.getUserPrincipal().getName();
+		User user = this.userService.findByUsername(username);
+		if(user == null){
+			return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
+		}
+		user.setDeactivated(true);
+		this.userService.update(user);
+		return new ResponseEntity<Resource<User>>(HttpStatus.OK);
+	}
+
+	@Secured({ "ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody 
 	public HttpEntity<Resources<User>> createUser(@RequestBody User user) {
@@ -98,6 +142,7 @@ public class UserController {
 		}
 	}
 
+	@Secured({ "ROLE_ADMIN"})
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public HttpEntity<Resource<User>> updateUser(@PathVariable ObjectId id, @RequestBody User user) {
@@ -110,7 +155,8 @@ public class UserController {
 		Resource<User> resource = userResourceAssembler.toResource(user);
 		return new ResponseEntity<Resource<User>>(resource, HttpStatus.OK);
 	}
-	
+
+	@Secured({ "ROLE_ADMIN"})
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public HttpEntity<Resource<User>> deleteUser(@PathVariable ObjectId id) {
 		if(this.userService.findOne(id) == null){

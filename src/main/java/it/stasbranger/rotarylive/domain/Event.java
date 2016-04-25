@@ -1,24 +1,31 @@
 package it.stasbranger.rotarylive.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
 
-
+@Document
 public class Event {
 
 	@Id
 	@JsonSerialize(using=ObjectIdSerializer.class)
-	private String id;
+	private ObjectId id;
 
 	@NotEmpty
 	private String name;
@@ -27,30 +34,38 @@ public class Event {
 	
 	private Date endDate;
 	
-	private Boolean allDay;
+	private Boolean allDay = false;
 	
-	private String content;
+	private String text;
+	
+	private String type;
+	
+	@JsonSerialize(using=ObjectIdSerializer.class)
+	private ObjectId imageId;
+	
+	@JsonIgnore
+    @Transient
+    private MultipartFile file;
 
-	private Date dateCreated;
+	@CreatedDate
+	private Date dateCreated = new Date();
 	
-	private Date dateModified;
+	@LastModifiedDate
+	private Date dateModified = new Date();
+	
+	List<Booking> booking = new ArrayList<Booking>();
 	
 	@DBRef
-	private User owner;
-	
+	private Location location;
+
 	@Version
 	private String version;
-	
-	private Set<Booking> bookings = new HashSet<Booking>();
-	
-	public Event() {
-	}
 
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -86,12 +101,12 @@ public class Event {
 		this.allDay = allDay;
 	}
 
-	public String getContent() {
-		return content;
+	public String getText() {
+		return text;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public Date getDateCreated() {
@@ -110,20 +125,12 @@ public class Event {
 		this.dateModified = dateModified;
 	}
 
-	public User getOwner() {
-		return owner;
+	public List<Booking> getBooking() {
+		return booking;
 	}
 
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
-
-	public Set<Booking> getBookings() {
-		return bookings;
-	}
-
-	public void setBookings(Set<Booking> bookings) {
-		this.bookings = bookings;
+	public void setBooking(List<Booking> booking) {
+		this.booking = booking;
 	}
 
 	public String getVersion() {
@@ -132,5 +139,37 @@ public class Event {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public ObjectId getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(ObjectId imageId) {
+		this.imageId = imageId;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 }

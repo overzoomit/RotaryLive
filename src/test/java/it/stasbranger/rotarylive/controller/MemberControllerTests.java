@@ -98,4 +98,26 @@ public class MemberControllerTests extends RotaryLiveApplicationTests {
 		JSONObject member = json.getJSONObject("member");
 		assertTrue(member.get("photoId")!=photoId.toString());
 	}
+	
+	@Test
+	@UsingDataSet(locations={"AttachControllerTests.json", "UserControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	public void updateWithImageTEST3() throws Exception {
+		FileInputStream fis = new FileInputStream("src/main/resources/static/flavio2.jpg");
+		MockMultipartFile data = new MockMultipartFile("file","flavio2.jpg", "image/jpeg", fis);
+
+		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");
+
+		User silvio = userService.findOne(new ObjectId("56fab17ee4b074b1e6b6cb02"));
+		ObjectId photoId = silvio.getMember() == null ? null : silvio.getMember().getPhotoId();
+
+		String result = mvc.perform(MockMvcRequestBuilders.fileUpload("/api/member/56fab17ee4b074b1e6b6cb02/image").file(data)
+				.accept(MediaType.APPLICATION_JSON).principal(principal))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+
+		JSONObject json = new JSONObject(result);
+		JSONObject member = json.getJSONObject("member");
+		assertTrue(member.get("photoId")!=photoId.toString());
+	}
 }

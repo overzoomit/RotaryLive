@@ -9,6 +9,15 @@ public class Role implements GrantedAuthority {
 
 	private static final long serialVersionUID = 1L;
 
+	public Role() {
+		super();
+	}	
+	
+	public Role(String name) {
+		super();
+		this.name = name;
+	}
+
 	@NotEmpty
 	private String name;
 

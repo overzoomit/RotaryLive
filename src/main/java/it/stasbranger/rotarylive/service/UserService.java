@@ -21,4 +21,6 @@ public interface UserService {
 	public User findByUsername(String username);
 	public User addImage(User user) throws IOException;
 	public Page<User> findAll(String query, Pageable pageable);
+	public void forgotPassword(User user);
+	public void resetPassword(User user, String password);
 }

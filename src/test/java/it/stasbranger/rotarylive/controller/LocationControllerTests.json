@@ -1,0 +1,14 @@
+{"location" : [
+	{"id" : {$oid: "57fab17ee4b074b1e6b7cb99"},
+	"name" : "Hotel L'Ottagono",
+	"address" : {
+	"ref" : "Hotel L'Ottagono",
+	"street" : "Via Barletta 168",
+	"city" :"Andria",
+	"province": "BT",
+	"zipCode": "76123",
+	"country" : "Italia"},
+	"version" : "0"
+	}
+	]
+}

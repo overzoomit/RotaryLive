@@ -1,35 +1,33 @@
 package it.stasbranger.rotarylive.domain;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
 
-public class Location {
+@Document
+public class District {
 
 	@Id
 	@JsonSerialize(using=ObjectIdSerializer.class)
-	private String id;
-
-	@NotEmpty
+	private ObjectId id;
+	
 	private String name;
 	
-	private Address address;
+	private Club club;
 	
 	@Version
 	private String version;
 
-	public Location() {
-	}
-	
-	public String getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 
@@ -41,12 +39,12 @@ public class Location {
 		this.name = name;
 	}
 
-	public Address getAddress() {
-		return address;
+	public Club getClub() {
+		return club;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setClub(Club club) {
+		this.club = club;
 	}
 
 	public String getVersion() {

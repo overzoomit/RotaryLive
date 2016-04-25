@@ -11,6 +11,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.FileInputStream;
+
 import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,7 +21,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
@@ -94,7 +99,7 @@ public class ClubControllerTests  extends RotaryLiveApplicationTests {
 	@UsingDataSet(locations={"ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void createClubTEST() throws Exception {
 
-		String content = "{\"name\" : \"Rotary Club Trani\", \"address\" : \"Il Melograno - Via Giovanni Bovio, 189\", \"zipCode\" : \"76125\", \"city\" : \"Trani\", \"province\": \"BT\", \"country\" : \"Italy\", \"email\" : \"info@rotarytrani.it\", \"phone\" : \"0883588010\", \"website\" : \"http://www.rotarytrani.it\"}";
+		String content = "{\"name\" : \"Rotary Club Trani\", \"address\" : {\"ref\":\"Il Melograno\", \"street\": \"Via Giovanni Bovio, 189\", \"zipCode\" : \"76125\", \"city\" : \"Trani\", \"province\": \"BT\", \"country\" : \"Italy\"}, \"email\" : \"info@rotarytrani.it\", \"phone\" : \"0883588010\", \"website\" : \"http://www.rotarytrani.it\"}";
 		JSONObject json = new JSONObject(content);
 
 		mvc.perform(post("/api/club")
@@ -108,7 +113,7 @@ public class ClubControllerTests  extends RotaryLiveApplicationTests {
 	@UsingDataSet(locations={"ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void createClubFAILTEST() throws Exception {
 
-		String content = "{\"name\" : \"Rotary Club Andria Castelli Svevi\", \"address\" : \"Il Melograno - Via Giovanni Bovio, 189\", \"zipCode\" : \"76125\", \"city\" : \"Trani\", \"province\": \"BT\", \"country\" : \"Italy\", \"email\" : \"info@rotarytrani.it\", \"phone\" : \"0883588010\", \"website\" : \"http://www.rotarytrani.it\"}";
+		String content = "{\"name\" : \"Rotary Club Andria Castelli Svevi\", \"address\" : {\"ref\":\"Il Melograno\", \"street\": \"Via Giovanni Bovio, 189\", \"zipCode\" : \"76125\", \"city\" : \"Trani\", \"province\": \"BT\", \"country\" : \"Italy\"}, \"email\" : \"info@rotarytrani.it\", \"phone\" : \"0883588010\", \"website\" : \"http://www.rotarytrani.it\"}";
 		JSONObject json = new JSONObject(content);
 
 		mvc.perform(post("/api/club")
@@ -130,12 +135,26 @@ public class ClubControllerTests  extends RotaryLiveApplicationTests {
 		Club club = clubService.findOne(new ObjectId("56fab17ee4b074b1e6b6ca80"));
 		assertNull(club);
 	}
+	
+	@Test
+	@UsingDataSet(locations={"ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	public void getClubTEST() throws Exception {
+		
+		String result = mvc.perform(get("/api/club/56fab17ee4b074b1e6b6ca80")
+				.contentType("application/json")
+				.accept(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk())
+		.andReturn().getResponse().getContentAsString();
+
+		JSONObject json = new JSONObject(result);
+		assertTrue(json.getString("name").equals("Rotary Club Andria Castelli Svevi"));
+	}
 
 	@Test
 	@UsingDataSet(locations={"ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void updateClubTEST() throws Exception {
 
-		String content = "{\"id\" : \"56fab17ee4b074b1e6b6ca80\", \"name\" : \"Rotary Club Andria Castelli Svevi\", \"address\" : \"Hotel L'Ottagono - via Barletta 138\", \"zipCode\" : \"76123\", \"city\" : \"Andria\", \"province\" : \"BT\", \"country\" : \"Italy\", \"website\" : \"http://www.rotaryandria.it\", \"email\" : \"info@rotaryandria.it\", \"version\": \"0\"}";
+		String content = "{\"id\" : \"56fab17ee4b074b1e6b6ca80\", \"name\" : \"Rotary Club Andria Castelli Svevi\", \"address\" : {\"ref\":\"Hotel L'Ottagono\", \"street\": \"via Barletta 138\", \"zipCode\" : \"76123\", \"city\" : \"Andria\", \"province\" : \"BT\", \"country\" : \"Italy\"}, \"website\" : \"http://www.rotaryandria.it\", \"email\" : \"info@rotaryandria.it\", \"version\": \"0\"}";
 		JSONObject json = new JSONObject(content);
 
 		String result = mvc.perform(put("/api/club/56fab17ee4b074b1e6b6ca80")
@@ -149,5 +168,23 @@ public class ClubControllerTests  extends RotaryLiveApplicationTests {
 		assertTrue(json.getString("version").equals("1"));
 		assertTrue(json.getString("email").equals("info@rotaryandria.it"));
 		assertTrue(json.getString("website").equals("http://www.rotaryandria.it"));
+	}
+	
+	@Test
+	@UsingDataSet(locations={"AttachControllerTests.json", "UserControllerTests.json", "ClubControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
+	public void updateWithImageTEST() throws Exception {
+		FileInputStream fis = new FileInputStream("src/main/resources/static/logo.jpg");
+		MockMultipartFile data = new MockMultipartFile("file","logo.jpg", "image/jpeg", fis);
+
+		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");
+
+		String result = mvc.perform(MockMvcRequestBuilders.fileUpload("/api/club/56fab17ee4b074b1e6b6ca80/image").file(data)
+				.accept(MediaType.APPLICATION_JSON).principal(principal))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andReturn().getResponse().getContentAsString();
+
+		JSONObject json = new JSONObject(result);
+		assertTrue(json.get("logoId")!=null);
 	}
 }

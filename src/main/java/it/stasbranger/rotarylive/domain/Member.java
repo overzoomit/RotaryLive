@@ -2,7 +2,7 @@ package it.stasbranger.rotarylive.domain;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.index.TextIndexed;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,21 +14,21 @@ import it.stasbranger.rotarylive.service.utility.ObjectIdSerializer;
 @Document
 public class Member {
 
-	@TextIndexed
+	@Indexed
 	private String firstName;
 	
-	@TextIndexed
+	@Indexed
 	private String lastName;
 	
 	private String gender; 
 
-	@TextIndexed(weight=2)
+	@Indexed
 	private String phone;
 	
-	@TextIndexed(weight=2)
+	@Indexed
 	private String mobile;
 	
-	@TextIndexed(weight=2)
+	@Indexed
 	private String email;
 	
 	private Address address;
@@ -122,5 +122,13 @@ public class Member {
 
 	public void setSocial(Social social) {
 		this.social = social;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

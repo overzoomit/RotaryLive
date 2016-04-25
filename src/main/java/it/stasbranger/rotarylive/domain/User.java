@@ -10,7 +10,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Language;
@@ -27,13 +26,13 @@ public class User {
 	private ObjectId id;
 
 	@CreatedDate
-	private Date creationDate;
+	private Date dateCreated = new Date();
 	
 	@LastModifiedDate
-	private Date lastModifiedDate;
+	private Date dateModified = new Date();
 	
 	@NotEmpty
-	@TextIndexed
+	@Indexed
 	private String name;
 	
 	@Language
@@ -52,7 +51,11 @@ public class User {
 
 	private Boolean verified = false;
 	
+	private Boolean deactivated = false;
+	
 	private Member member;
+	
+	private Device device;
 
 	private List<Role> roles;
 
@@ -133,12 +136,20 @@ public class User {
 		this.member = member;
 	}
 
-	public Date getCreationDate() {
-		return creationDate;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Date dateModified) {
+		this.dateModified = dateModified;
 	}
 
 	public Boolean getVerified() {
@@ -148,20 +159,28 @@ public class User {
 	public void setVerified(Boolean verified) {
 		this.verified = verified;
 	}
-
-	public Date getLastModifiedDate() {
-		return lastModifiedDate;
-	}
-
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
-
+	
 	public String getLang() {
 		return lang;
 	}
 
 	public void setLang(String lang) {
 		this.lang = lang;
+	}
+
+	public Boolean getDeactivated() {
+		return deactivated;
+	}
+
+	public void setDeactivated(Boolean deactivated) {
+		this.deactivated = deactivated;
+	}
+
+	public Device getDevice() {
+		return device;
+	}
+
+	public void setDevice(Device device) {
+		this.device = device;
 	}
 }

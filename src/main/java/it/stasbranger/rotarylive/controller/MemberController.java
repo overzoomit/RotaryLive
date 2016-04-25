@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.stasbranger.rotarylive.domain.Member;
+import it.stasbranger.rotarylive.domain.Role;
 import it.stasbranger.rotarylive.domain.User;
 import it.stasbranger.rotarylive.resource.UserResourceAssembler;
 import it.stasbranger.rotarylive.service.UserService;
@@ -42,7 +43,15 @@ public class MemberController {
             if (user == null) {
             	return new ResponseEntity<Resource<User>>(HttpStatus.NOT_FOUND);
             }
-            if (!username.equals(user.getUsername()) && !httpServletRequest.isUserInRole("ADMIN")) {
+            User me = userService.findByUsername(username);
+            boolean admin = false;
+            for (Role role : me.getRoles()) {
+				if(role.getName().equals("ROLE_ADMIN")){
+					admin = true;
+					break;
+				}
+			}
+            if (!username.equals(user.getUsername()) && !admin) {
             	return new ResponseEntity<Resource<User>>(HttpStatus.METHOD_NOT_ALLOWED);
             }
             Member member = user.getMember();

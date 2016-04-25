@@ -1,10 +1,12 @@
 package it.stasbranger.rotarylive.domain;
 
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Job {
 
+	@Indexed
 	private String headline;
 	
 	private String note;

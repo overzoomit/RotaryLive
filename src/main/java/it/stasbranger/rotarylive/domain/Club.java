@@ -23,15 +23,7 @@ public class Club {
     @Indexed(unique = true)
 	private String name;
 	
-	private String address;
-	
-	private String zipCode;
-	
-	private String city;
-	
-	private String province;
-
-	private String country;
+	private Address address;
 	
 	private String email;
 	
@@ -57,28 +49,12 @@ public class Club {
 		this.name = name;
 	}
 
-	public String getCity() {
-		return city;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getProvince() {
-		return province;
-	}
-
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public ObjectId getId() {
@@ -95,22 +71,6 @@ public class Club {
 
 	public void setVersion(String version) {
 		this.version = version;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
 	}
 
 	public ObjectId getLogoId() {

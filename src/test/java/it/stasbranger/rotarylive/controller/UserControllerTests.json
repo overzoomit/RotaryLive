@@ -10,11 +10,16 @@
 						"lastName" : "Troia",
 						"phone" : "02334380922",
 						"mobile" : "34733423322",
+						"email" : "flavio.troia@gmail.com",
 						"photoId" : {$oid: "56fab17ee4b074b1e6b6cb79"},
 						"address" : {"city" :"Andria",
 									 "street" : "Via Sosta San Riccardo 28"}
 						},
-			"job"	: {"headline":"Ingegnere"},			
+			"job"	: {"headline":"Ingegnere"},	
+			"device"	: {
+							"os":"android",
+							"id":"2e39bfeacea52318"
+							},			
 			"roles" : [{
 						"name" : "ROLE_ADMIN"
 						}],			
