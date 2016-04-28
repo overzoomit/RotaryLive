@@ -24,7 +24,6 @@ import it.stasbranger.rotarylive.service.utility.UtilityService;
 public class UserServiceImpl implements UserService {
 
 	@Autowired private UserRepository userRepository;
-	@Autowired private RoleService roleService;
 	@Autowired private AttachService attachService;
 	@Autowired private MailService mailService;
 	@Autowired private UtilityService utilityService;
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 
-		Role role = roleService.findByName("ROLE_USER");
+		Role role = new Role("ROLE_USER");
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(role);	
 		user.setRoles(roles);
