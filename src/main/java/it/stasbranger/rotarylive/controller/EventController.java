@@ -61,6 +61,21 @@ public class EventController {
 		PagedResources<EventResource> resources = assembler.toResource(events, eventResourceAssembler);
 		return new ResponseEntity<PagedResources<EventResource>>(resources, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public HttpEntity<Resource<Event>> showEvent(@PathVariable ObjectId id) {
+		try{
+			Event event = this.eventService.findOne(id);
+			if(event == null){
+				return new ResponseEntity<Resource<Event>>(HttpStatus.NOT_FOUND);
+			}
+			Resource<Event> resource = eventResourceAssembler.toResource(event);
+			return new ResponseEntity<Resource<Event>>(resource, HttpStatus.OK);
+		}catch(Exception e){
+			return new ResponseEntity<Resource<Event>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	@Secured({ "ROLE_ADMIN"})
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
