@@ -45,7 +45,6 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody 
 	public HttpEntity<PagedResources<UserResource>> showUsers(@RequestParam(value = "q", required = false) String query, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.DESC, sort = "name") Pageable pageable, PagedResourcesAssembler<User> assembler, HttpServletRequest httpServletRequest) {
-
 		if(httpServletRequest.isUserInRole("ADMIN")){
 			System.out.println(httpServletRequest.getUserPrincipal().getName() + " IS ADMIN");
 		}		

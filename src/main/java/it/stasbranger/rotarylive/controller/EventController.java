@@ -48,16 +48,18 @@ public class EventController {
 
 	@RequestMapping(value = "/timeline", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody 
-	public HttpEntity<PagedResources<EventResource>> showEventsTimeline(@RequestParam(value = "q", required = false) String query, @RequestParam(value = "d1", required = false) Date date1, @RequestParam(value = "d2", required = false) Date date2, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.ASC, sort = "startDate") Pageable pageable, PagedResourcesAssembler<Event> assembler) {
-		Page<Event> events = this.eventService.findByDate(query, date1, date2, pageable);
+	public HttpEntity<PagedResources<EventResource>> showEventsTimeline(@RequestParam(value = "q", required = false) String query, @RequestParam(value = "d1", required = false) Date date1, @RequestParam(value = "d2", required = false) Date date2, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.ASC, sort = "startDate") Pageable pageable, PagedResourcesAssembler<Event> assembler, HttpServletRequest httpServletRequest) {
+		String username = httpServletRequest.getUserPrincipal().getName();
+		Page<Event> events = this.eventService.findByDate(query, date1, date2, username, pageable);
 		PagedResources<EventResource> resources = assembler.toResource(events, eventResourceAssembler);
 		return new ResponseEntity<PagedResources<EventResource>>(resources, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/calendar", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody 
-	public HttpEntity<PagedResources<EventResource>> showEventsCalendar(@RequestParam(value = "q", required = false) String query, @RequestParam(value = "d", required = false) Date date, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.ASC, sort = "startDate") Pageable pageable, PagedResourcesAssembler<Event> assembler) {
-		Page<Event> events = this.eventService.findAll(query, date, pageable);
+	public HttpEntity<PagedResources<EventResource>> showEventsCalendar(@RequestParam(value = "q", required = false) String query, @RequestParam(value = "d", required = false) Date date, @PageableDefault(size = 10, page = 0, direction = Sort.Direction.ASC, sort = "startDate") Pageable pageable, PagedResourcesAssembler<Event> assembler, HttpServletRequest httpServletRequest) {
+		String username = httpServletRequest.getUserPrincipal().getName();
+		Page<Event> events = this.eventService.findAll(query, date, username, pageable);
 		PagedResources<EventResource> resources = assembler.toResource(events, eventResourceAssembler);
 		return new ResponseEntity<PagedResources<EventResource>>(resources, HttpStatus.OK);
 	}

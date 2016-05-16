@@ -26,6 +26,7 @@ public class EventServiceImpl implements EventService {
 
 	@Autowired private EventRepository eventRepository;
 	@Autowired private AttachService attachService;
+	@Autowired private UserService userService;
 
 	public void create(Event event){
 		eventRepository.save(event);
@@ -56,14 +57,18 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.findAll(pageable);
 	}
 
-	public Page<Event> findAll(String query, Date date, Pageable pageable){
-		if(date == null && query != null) return eventRepository.findAll(query, pageable);
-		else if(date != null && (query == null || query.trim().equals(""))) return eventRepository.findAll(date, pageable);
-		else if (date != null && query != null && !query.trim().equals("")) return eventRepository.findAll(query, date, pageable);
-		else return eventRepository.findAll(pageable);
+	public Page<Event> findAll(String query, Date date, String username, Pageable pageable){
+		Page<Event> page = null;
+		
+		if(date == null && query != null) page = eventRepository.findAll(query, pageable);
+		else if(date != null && (query == null || query.trim().equals(""))) page = eventRepository.findAll(date, pageable);
+		else if (date != null && query != null && !query.trim().equals("")) page = eventRepository.findAll(query, date, pageable);
+		else page = eventRepository.findAll(pageable);
+		
+		return isBooked(page, username);
 	}
 
-	public Page<Event> findByDate(String query, Date date1, Date date2, Pageable pageable){
+	public Page<Event> findByDate(String query, Date date1, Date date2, String username, Pageable pageable){
 
 		if(date1 == null && date2 == null) date1 = new Date();
 
@@ -87,10 +92,29 @@ public class EventServiceImpl implements EventService {
 			date2 = end.getTime();
 		}
 
-		if(date2 == null && (query == null || query.trim().equals(""))) return eventRepository.findByDate(date1, pageable);
-		else if(date2 != null && (query == null || query.trim().equals(""))) return eventRepository.findByDate(date1, date2, pageable);
-		else if (date2 != null && query != null && !query.trim().equals("")) return eventRepository.findByDate(query, date1, date2, pageable);
-		else return eventRepository.findByDate(query, date1, pageable);
+		Page<Event> page = null;
+
+		if(date2 == null && (query == null || query.trim().equals(""))) page = eventRepository.findByDate(date1, pageable);
+		else if(date2 != null && (query == null || query.trim().equals(""))) page = eventRepository.findByDate(date1, date2, pageable);
+		else if (date2 != null && query != null && !query.trim().equals("")) page = eventRepository.findByDate(query, date1, date2, pageable);
+		else page = eventRepository.findByDate(query, date1, pageable);
+
+		return isBooked(page, username);
+	}
+
+	private Page<Event> isBooked(Page<Event> page, String username){
+		User user = this.userService.findByUsername(username);
+
+		Iterator<Event> iter = page.iterator();
+		while (iter.hasNext()) {
+			Event event = (Event) iter.next();
+			List<Booking> list = event.getBooking();
+			if(list.stream().filter(o -> o.getUser().equals(user)).findFirst().isPresent()){
+				event.setBooked(true);
+			}
+		}
+		
+		return page;
 	}
 
 	public List<Event> clientNotification(){

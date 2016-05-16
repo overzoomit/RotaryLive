@@ -53,6 +53,9 @@ public class Event {
 	@LastModifiedDate
 	private Date dateModified = new Date();
 	
+	@Transient
+	private Boolean booked = false;
+	
 	List<Booking> booking = new ArrayList<Booking>();
 	
 	@DBRef
@@ -171,5 +174,13 @@ public class Event {
 
 	public void setFile(MultipartFile file) {
 		this.file = file;
+	}
+
+	public Boolean getBooked() {
+		return booked;
+	}
+
+	public void setBooked(Boolean booked) {
+		this.booked = booked;
 	}
 }

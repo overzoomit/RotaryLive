@@ -117,9 +117,11 @@ public class EventControllerTests extends RotaryLiveApplicationTests {
 	@UsingDataSet(locations={"LocationControllerTests.json", "UserControllerTests.json", "EventControllerTests.json"}, loadStrategy=LoadStrategyEnum.CLEAN_INSERT)
 	public void findAllEventsByQueryDateTEST4() throws Exception {
 		
+		UsernamePasswordAuthenticationToken principal = this.getPrincipal("flavio");
+		
 		String result = mvc.perform(get("/api/event/timeline").contentType("application/json")
 				.param("d1", "2016/04/01")
-				.accept(MediaType.APPLICATION_JSON))
+				.accept(MediaType.APPLICATION_JSON).principal(principal))
 				.andExpect(status().isOk())
 				.andReturn().getResponse().getContentAsString();
 

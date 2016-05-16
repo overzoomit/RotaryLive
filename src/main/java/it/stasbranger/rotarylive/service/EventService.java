@@ -20,8 +20,8 @@ public interface EventService {
 	public void delete(ObjectId id);
 	public void delete(Event event);
 	public Page<Event> findAll(Pageable pageable);
-	public Page<Event> findAll(String query, Date date, Pageable pageable);
-	public Page<Event> findByDate(String query, Date date1, Date date2, Pageable pageable);
+	public Page<Event> findAll(String query, Date date, String username, Pageable pageable);
+	public Page<Event> findByDate(String query, Date date1, Date date2, String username, Pageable pageable);
 	public List<Event> clientNotification();
 	public Event addImage(Event event) throws IOException;
 	public Event createBooking(Event event, User user, String comment) throws Exception;
