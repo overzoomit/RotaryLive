@@ -104,7 +104,6 @@ public class EventServiceImpl implements EventService {
 
 	private Page<Event> isBooked(Page<Event> page, String username){
 		User user = this.userService.findByUsername(username);
-
 		Iterator<Event> iter = page.iterator();
 		while (iter.hasNext()) {
 			Event event = (Event) iter.next();
