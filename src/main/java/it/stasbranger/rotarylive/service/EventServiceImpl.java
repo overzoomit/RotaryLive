@@ -109,8 +109,11 @@ public class EventServiceImpl implements EventService {
 		while (iter.hasNext()) {
 			Event event = (Event) iter.next();
 			List<Booking> list = event.getBooking();
-			if(list.stream().filter(o -> o.getUser().equals(user)).findFirst().isPresent()){
-				event.setBooked(true);
+			for (Booking booking : list) {
+				if(booking.getUser()!= null && booking.getUser().getId().equals(user.getId())){
+					event.setBooked(true);
+					break;
+				}
 			}
 		}
 		

@@ -2,6 +2,7 @@ package it.stasbranger.rotarylive.controller;
 
 import static com.lordofthejars.nosqlunit.mongodb.MongoDbRule.MongoDbRuleBuilder.newMongoDbRule;
 import static com.lordofthejars.nosqlunit.mongodb.ReplicationMongoDbConfigurationBuilder.replicationMongoDbConfiguration;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -133,6 +134,11 @@ public class EventControllerTests extends RotaryLiveApplicationTests {
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject j = array.getJSONObject(i);
 			assertTrue(j.get("name").equals("SIPE 2016") || j.get("name").equals("RYLA 2016"));
+			if(j.get("name").equals("SIPE 2016")){
+				assertTrue((Boolean)j.get("booked"));
+			}else{
+				assertFalse((Boolean)j.get("booked"));
+			}
 		}
 	}
 	
