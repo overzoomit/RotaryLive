@@ -102,6 +102,12 @@ public class EventServiceImpl implements EventService {
 		return isBooked(page, username);
 	}
 
+	/**
+	 * check booking 
+	 * @param page
+	 * @param username
+	 * @return
+	 */
 	private Page<Event> isBooked(Page<Event> page, String username){
 		User user = this.userService.findByUsername(username);
 		Iterator<Event> iter = page.iterator();
